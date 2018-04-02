@@ -5,7 +5,7 @@ import './Button.css';
 
 /* todo aðrar útgáfur af takka fyrir disabled, minni takka fyrir logout og "warning" takka */
 
-export default class Books extends Component {
+export default class Button extends Component {
 
   static propTypes = {
     onClick: PropTypes.func,
