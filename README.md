@@ -41,7 +41,7 @@ Innskráðir notendur geta:
 
 Allar aðgerðir tengjast viðeigandi aðgerðum í vefþjónustu.
 
-Fyrri útgáfa hafði þá kröfu að geta séð lestur og eytt lestri á hverri bók. Sú krafa var fjarlægð og sett inn krafa um að geta eytt lestri á `/profile` þar sem það passar betur við vefþjónustu.
+Fyrri útgáfa hafði þá kröfu að geta séð lestur og eytt lestri á hverri bók. Sú krafa var fjarlægð og sett inn krafa um að geta eytt lestri á `/profile` þar sem það passar betur við vefþjónustu. Í sýnilausn á vefþjónustu er [búið að bæta við titli á bók](https://github.com/vefforritun/vef2-2018-h1-synilausn/commit/5f1a433b76930e2c5752027fa525b4d275aa1fdd) sem gerir þessa birtingu mögulega án vandræða.
 
 ## Leit og síður
 
