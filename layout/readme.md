@@ -24,9 +24,7 @@
 
 ![](bok.png)
 
-## Bók, lesin
-
-![](bok_lesin.png)
+Hér var tekin út krafa um að geta skráð lestur á bók. Takki ætti þá frekar að vera „Skrá lestur“ en „Lesin bók“.
 
 ## Breyta bók
 
@@ -48,13 +46,15 @@
 
 ![](notendur.png)
 
-## Bók
+## Notandi
 
 ![](notandi.png)
 
 ## Innskráður notandi
 
 ![](profile.png)
+
+Hér bættist við að geta eytt lestri.
 
 ## Mobile
 

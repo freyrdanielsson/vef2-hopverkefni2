@@ -31,15 +31,17 @@ Innskráðir notendur geta:
   - Setja inn mynd
   - Uppfæra nafn
   - Uppfæra lykilorð
+  - Séð lestur á bókum og eytt lestri
 * Skráð nýja bók á `/books/new`
 * Skoðað bók á `/books/:id` og á sama stað
   - Skráð lestur á bók
-  - Eytt lestur á bók
 * Uppfært bók sem til er á `/books/:id/edit`
 * Skoðað lista af notendum á `/users`
 * Skoðað notendur og lestur þeirra á `/users/:id`
 
 Allar aðgerðir tengjast viðeigandi aðgerðum í vefþjónustu.
+
+Fyrri útgáfa hafði þá kröfu að geta séð lestur og eytt lestri á hverri bók. Sú krafa var fjarlægð og sett inn krafa um að geta eytt lestri á `/profile` þar sem það passar betur við vefþjónustu.
 
 ## Leit og síður
 
