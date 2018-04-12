@@ -1,21 +1,20 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import Helmet from 'react-helmet';
 
-/* todo sækja actions frá ./actions */
-
-import './Login.css';
+import LoginForm from '../../components/loginForm';
 
 class Login extends Component {
 
-  render() {
+  // TODO: redirect á users/me ef notandi er loggaður inn? eða er það gert annarsstaðar
+
+    render() {
+
     return (
-      <div>
-        <p>Innskráning</p>
-      </div>
+      <LoginForm/>
     );
   }
 }
 
-/* todo tengja við redux */
+
 
 export default Login;
