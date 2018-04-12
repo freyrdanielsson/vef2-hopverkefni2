@@ -41,7 +41,9 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => {
-  /* todo stilla redux ef það er notað */
+  return {
+    dummy: state.dummy,
+  }
 }
 
 export default withRouter(connect(mapStateToProps)(App));
