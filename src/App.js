@@ -29,7 +29,10 @@ class App extends Component {
         <div className="main__content">
           <Switch location={this.props.location}>
             <Route path="/" exact component={Home} />
+
+            {/* UserRoute renderar component ef authenticated=true annars redirectar hann */}
             <UserRoute path="/login" authenticated={!isAuthenticated} redirect="/profile" component={Login} />
+            <UserRoute path="/register" authenticated={!isAuthenticated} redirect="/profile" component={Register} />
             <UserRoute path="/profile" authenticated={isAuthenticated} redirect="/login" component={Profile} />
             {/* todo fleiri route */}
             <Route component={NotFound} />

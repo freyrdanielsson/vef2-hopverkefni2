@@ -14,6 +14,7 @@ class LoginHeader extends Component {
 
   render() {
 		const { user } = this.props;
+		
 				
 		if (this.props.user) {
 			return (

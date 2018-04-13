@@ -1,14 +1,19 @@
 import React, { Component } from 'react';
 import Helmet from 'react-helmet';
-import { Route, Redirect } from 'react-router-dom'
+
+import RegisterForm from '../../components/registerForm';
 
 class Register extends Component {
 
     render() {
-    
+      console.log('register rout');
+      
 
     return (
-      <div>register</div>
+      <div>
+        <Helmet defaultTitle="Login" />
+        <RegisterForm/>
+      </div>
     );
   }
 }

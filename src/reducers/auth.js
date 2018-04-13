@@ -2,12 +2,13 @@ import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGIN_LOGOUT } from '../ac
 
 // Ef það er notandi í localStorage erum við með innskráðan notanda
 // skipta þessu út fyrir token
-const user = JSON.parse(localStorage.getItem('token') || 'null');
+// ÞETTA ER ÖRUGGLEGA EKKI SNIÐUGT IN REAL LIFE
+const user = JSON.parse(localStorage.getItem('user') || 'null');
 
 const initialState = {
   isFetching: false,
   isAuthenticated: user ? true : false,
-  user,
+  user: user ? user.user : null,
 };
 
 export default (state = initialState, action) => {

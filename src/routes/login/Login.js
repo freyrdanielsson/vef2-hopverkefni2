@@ -7,8 +7,6 @@ import LoginForm from '../../components/loginForm';
 
 class Login extends Component {
 
-  // TODO: redirect á users/me ef notandi er loggaður inn? eða er það gert annarsstaðar
-
     render() {
       const { authenticated } = this.props;
 
