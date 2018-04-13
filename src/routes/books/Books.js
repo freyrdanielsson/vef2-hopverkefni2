@@ -4,9 +4,10 @@ import Helmet from 'react-helmet';
 import BooksView from '../../components/booksView';
 
 class Books extends Component {
+
     render() {
         return (
-            <BooksView/>
+            <BooksView url={this.props.location.search}/>
         );
   }
 }
