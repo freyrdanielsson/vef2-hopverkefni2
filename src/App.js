@@ -10,7 +10,10 @@ import Home from './routes/home';
 import Login from './routes/login';
 import Profile from './routes/profile';
 import NotFound from './routes/not-found';
+
 import Register from './routes/register';
+import Books from './routes/books';
+
 /* todo fleiri routes */
 
 import './App.css';
@@ -29,11 +32,13 @@ class App extends Component {
         <div className="main__content">
           <Switch location={this.props.location}>
             <Route path="/" exact component={Home} />
-
             {/* UserRoute renderar component ef authenticated=true annars redirectar hann */}
             <UserRoute path="/login" authenticated={!isAuthenticated} redirect="/profile" component={Login} />
             <UserRoute path="/register" authenticated={!isAuthenticated} redirect="/profile" component={Register} />
             <UserRoute path="/profile" authenticated={isAuthenticated} redirect="/login" component={Profile} />
+            <Route exact path="/books" component={Books} />
+
+
             {/* todo fleiri route */}
             <Route component={NotFound} />
           </Switch>

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import Button from '../button';
 
+import './Search.css';
+
 class Search extends Component {
 
   onClick = (e) => {
@@ -10,7 +12,10 @@ class Search extends Component {
 
   render() {
     return (
-        <Button onClick={this.onClick}>Leita</Button>
+      <form>
+        <input type="search" placeholder="Bókaleit"></input>
+        <Button className="leitarButton" onClick={this.onClick}>Leita</Button>
+      </form>
     );
   }
 }
