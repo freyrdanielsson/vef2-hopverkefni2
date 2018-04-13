@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 
-import { loginUser, logoutUser } from '../../actions/auth';
+import { loginUser } from '../../actions/auth';
 
 import './LoginForm.css';
 
@@ -30,27 +30,17 @@ class LoginForm extends Component {
 			
 			dispatch(loginUser(username, password));
 		}
-	
-		handleLogout = (e) => {
-			const { dispatch } = this.props;
-			dispatch(logoutUser());
-		}
 
 	render() {
 		const { username, password } = this.state;
 		const { isFetching, isAuthenticated, message } = this.props;
 
-		if (isAuthenticated) {
-			return (
-				<button onClick={this.handleLogout}>Útskrá</button>
-			);
-		}
-
 		if (isFetching) {
 			return (
-				<Helmet defaultTitle="Skrái inn..">
-					<p>Skrái inn <em>{username}</em>...</p>
-				</Helmet>
+			<div>
+				<Helmet defaultTitle="Skrái inn.."/>
+				<p>Skrái inn <em>{username}</em>...</p>
+			</div>
 			);
 		}
 
