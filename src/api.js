@@ -42,6 +42,5 @@ export async function post(endpoint, data) {
 
 export default {
   get,
-  post,
-  login
+  post
 };

@@ -10,6 +10,7 @@ import Home from './routes/home';
 import Login from './routes/login';
 import Profile from './routes/profile';
 import NotFound from './routes/not-found';
+import Register from './routes/register';
 /* todo fleiri routes */
 
 import './App.css';
@@ -28,8 +29,8 @@ class App extends Component {
         <div className="main__content">
           <Switch location={this.props.location}>
             <Route path="/" exact component={Home} />
-            <Route path="/login" render={() => <Login authenticated={isAuthenticated}/>} />
-            <UserRoute path="/profile" authenticated={isAuthenticated} component={Profile} />
+            <UserRoute path="/login" authenticated={!isAuthenticated} redirect="/profile" component={Login} />
+            <UserRoute path="/profile" authenticated={isAuthenticated} redirect="/login" component={Profile} />
             {/* todo fleiri route */}
             <Route component={NotFound} />
           </Switch>

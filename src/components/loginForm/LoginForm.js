@@ -33,7 +33,7 @@ class LoginForm extends Component {
 
 	render() {
 		const { username, password } = this.state;
-		const { isFetching, isAuthenticated, message } = this.props;
+		const { isFetching, message } = this.props;
 
 		if (isFetching) {
 			return (
@@ -72,7 +72,6 @@ class LoginForm extends Component {
 const mapStateToProps = (state) => {
   return {
     isFetching: state.auth.isFetching,
-    isAuthenticated: state.auth.isAuthenticated,
     message: state.auth.message,
   }
 }
