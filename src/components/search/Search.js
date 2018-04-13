@@ -7,6 +7,7 @@ import './Search.css';
 class Search extends Component {
 
   onClick = (e) => {
+    e.preventDefault();
     console.log('leita');
   }
 
