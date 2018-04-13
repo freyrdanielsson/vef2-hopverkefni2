@@ -50,22 +50,22 @@ function logout() {
 // Thunk!
 export const loginUser = (username, password) => {
   return async (dispatch) => {
-    dispatch(requestLogin());
+    dispatch(requestLogin());    
 
     let login;
     try {
-      login = await api.login(username, password);
+      login = await api.post('/login', {username, password});
     } catch (e) {
       return dispatch(loginError(e))
     }
 
-    if (!login.loggedin) {
-      dispatch(loginError(login.error))
+    if (login.result.error) {
+      dispatch(loginError(login.result.error))
     }
 
-    if (login.loggedin) {
-      const { user } = login;
-      localStorage.setItem('user', JSON.stringify(user));
+    if (login.status === 200) {
+      const { user, token } = login.result;
+      localStorage.setItem('token', JSON.stringify(token));
       dispatch(receiveLogin(user));
     }
   }
@@ -73,7 +73,7 @@ export const loginUser = (username, password) => {
 
 export const logoutUser = () => {
   return async (dispatch) => {
-    localStorage.removeItem('user');
+    localStorage.removeItem('token');
     dispatch(logout());
   }
 }

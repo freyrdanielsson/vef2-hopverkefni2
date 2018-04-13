@@ -21,38 +21,30 @@ async function get(endpoint) {
   return { result, status: response.status};
 }
 
+export async function post(endpoint, data) {
+  const url = `${baseurl}${endpoint}`;
 
-/*--------------------------------------*/
-// Mock fall, þarf að skipta út fyrir alvöru kall í vefþjónustu
+  const options = {
+    body: JSON.stringify(data),
+    headers: {
+      'content-type': 'application/json',
+    },
+    method: 'POST',
+  };
 
-function login(username, password) {
-  return new Promise((resolve, reject) => {
-    const user = {
-      name: 'Mock admin user',
-      username: 'admin',
-    }
+  const response = await fetch(url, options);
 
-    if (username === 'error') {
-      return reject('Villa');
-    }
+  const result = await response.json();
+  
+  
 
-    if (username === 'admin' && password === '123') {
-      return setTimeout(() => resolve({ loggedin: true, user }), 1000);
-    }
-
-    if (username !== 'admin') {
-      return setTimeout(() => resolve({ loggedin: false, error: 'Notandi ekki til' }), 500);
-    }
-
-    return setTimeout(() => resolve({ loggedin: false, error: 'Vitlaust lykilorð' }), 500);
-  });
+  return { result, status: response.status };
 }
-
-/*--------------------------------------*/
 
 /* todo aðrar aðgerðir */
 
 export default {
   get,
+  post,
   login
 };

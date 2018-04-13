@@ -2,7 +2,7 @@ import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGIN_LOGOUT } from '../ac
 
 // Ef það er notandi í localStorage erum við með innskráðan notanda
 // skipta þessu út fyrir token
-const user = JSON.parse(localStorage.getItem('user') || 'null');
+const user = JSON.parse(localStorage.getItem('token') || 'null');
 
 const initialState = {
   isFetching: false,
@@ -12,7 +12,7 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case LOGIN_REQUEST:
+    case LOGIN_REQUEST:    
       return {
         ...state,
         isFetching: action.isFetching,

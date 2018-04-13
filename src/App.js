@@ -18,7 +18,7 @@ import './App.css';
 class App extends Component {
 
   render() {
-    const authenticated = false; /* vita hvort notandi sé innskráður */
+    const { isAuthenticated } = this.props;
 
     return (
       <main className="main">
@@ -29,9 +29,9 @@ class App extends Component {
         <div className="main__content">
           <Switch location={this.props.location}>
             <Route path="/" exact component={Home} />
-            <Route path="/login" exact component={Login} />
             <Route exact path="/books" component={Books} />
-            <UserRoute path="/profile" authenticated={authenticated} component={Profile} />
+            <Route path="/login" render={() => <Login authenticated={isAuthenticated}/>} />
+            <UserRoute path="/profile" authenticated={isAuthenticated} component={Profile} />
             {/* todo fleiri route */}
             <Route component={NotFound} />
           </Switch>
@@ -44,7 +44,7 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    dummy: state.dummy,
+    isAuthenticated: state.auth.isAuthenticated,
   }
 }
 
