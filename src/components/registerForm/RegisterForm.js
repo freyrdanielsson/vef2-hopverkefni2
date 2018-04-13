@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 
-import { loginUser } from '../../actions/auth';
+import { registerUser } from '../../actions/register';
 
-import './LoginForm.css';
+import './RegisterForm.css';
 
-class LoginForm extends Component {
+class RegisterForm extends Component {
 
   
 		state = {
+			name: '',
 			username: '',
 			password: '',
 		}
@@ -26,31 +27,40 @@ class LoginForm extends Component {
 			e.preventDefault();
 	
 			const { dispatch } = this.props;
-			const { username, password } = this.state;
+			const { name, username, password } = this.state;
 			
-			dispatch(loginUser(username, password));
+			dispatch(registerUser(name, username, password));
 		}
 
 	render() {
-		const { username, password } = this.state;
+		const { name, username, password } = this.state;
 		const { isFetching, message } = this.props;
 
 		if (isFetching) {
-			return (
 			<div>
-				<Helmet defaultTitle="Skrái inn.."/>
-				<p>Skrái inn <em>{username}</em>...</p>
-			</div>
-			);
+			<Helmet defaultTitle="Skrái notanda..."/>
+			<p>Bökum nýjan notanda: <em>{username}</em>...</p>
+		</div>
 		}
 
 		return (
 			<div>
 				{message && (
-					<p>{message}</p>
+					<ul>{message.map((error, i) => (
+						<ul key={i}>
+							<dt>{error.field}</dt>
+							<dd>{error.message}</dd>
+						</ul>
+						))}
+					</ul>
 				)}
 
 				<form onSubmit={this.handleSubmit}>
+
+					<div>
+						<label htmlFor="name">Nafn</label>
+						<input id="name" type="text" name="name" value={name} onChange={this.handleInputChange} />
+					</div>
 
 					<div>
 						<label htmlFor="username">Notendanafn:</label>
@@ -62,7 +72,7 @@ class LoginForm extends Component {
 						<input id="password" type="password" name="password" value={password} onChange={this.handleInputChange} />
 					</div>
 
-					<button disabled={isFetching}>Innskrá</button>
+					<button disabled={isFetching}>Búa til notanda</button>
 				</form>
 			</div>
 		);
@@ -71,9 +81,10 @@ class LoginForm extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    isFetching: state.auth.isFetching,
-    message: state.auth.message,
+		// er ekki að nota isFetching atm
+    isFetching: state.register.isFetching,
+    message: state.register.message,
   }
 }
 
-export default connect(mapStateToProps)(LoginForm);
+export default connect(mapStateToProps)(RegisterForm);
