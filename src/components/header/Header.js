@@ -18,7 +18,6 @@ class Header extends Component {
         <h1 className="header__heading"><Link to="/">Bókasafnið</Link></h1>
 
         <Search/>
-
         <LoginHeader/>
       </header>
     );
