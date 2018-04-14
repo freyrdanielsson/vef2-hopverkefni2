@@ -36,6 +36,8 @@ class LoginForm extends Component {
 	render() {
 		const { username, password } = this.state;
 		const { isFetching, message } = this.props;
+		console.log(this.props);
+		
 
 		if (isFetching) {
 			return (

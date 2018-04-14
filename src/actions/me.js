@@ -1,19 +1,19 @@
 import api from '../api';
 
-export const UPLOAD_PIC_REQUEST = 'UPLOAD_PIC_REQUEST';
-export const UPLOAD_PIC_SUCCESS = 'UPLOAD_PIC_SUCCESS';
-export const UPLOAD_PIC_FAILURE = 'UPLOAD_PIC_FAILURE';
+export const UPDATE_USER_REQUEST = 'UPDATE_USER_REQUEST';
+export const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
+export const UPDATE_USER_FAILURE = 'UPDATE_USER_FAILURE';
 
 function requestUpload() {
   return {
-    type: UPLOAD_PIC_REQUEST,
+    type: UPDATE_USER_REQUEST,
     isFetching: true,
   }
 }
 
 function receiveUpload(user) {
   return {
-    type: UPLOAD_PIC_SUCCESS,
+    type: UPDATE_USER_SUCCESS,
     isFetching: false,
     user,
     message: null,
@@ -22,7 +22,7 @@ function receiveUpload(user) {
 
 function uploadError(message) {
   return {
-    type: UPLOAD_PIC_FAILURE,
+    type: UPDATE_USER_FAILURE,
     isFetching: false,
     message
   }
@@ -46,6 +46,29 @@ export const uploadProfile = (profile) => {
 
     if (upload.status === 201) {
       const user = upload.result;
+      window.localStorage.setItem('user', JSON.stringify(user))
+      dispatch(receiveUpload(user));
+    }
+  }
+}
+
+// Thunk!
+export const updateUser = (userInfo) => {
+  return async (dispatch) => {
+    dispatch(requestUpload());
+    let update;
+    try {
+      update = await api.patch('/users/me', userInfo);
+    } catch (e) {
+      return dispatch(uploadError(e))
+    }
+
+    if (update.result.errors) {
+      dispatch(uploadError(update.result.errors))
+    }
+
+    if (update.status === 200) {
+      const user = update.result;
       window.localStorage.setItem('user', JSON.stringify(user))
       dispatch(receiveUpload(user));
     }
