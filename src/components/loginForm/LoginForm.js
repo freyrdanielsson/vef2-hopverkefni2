@@ -16,6 +16,8 @@ class LoginForm extends Component {
 
 		handleInputChange = (e) => {
 			const { name, value } = e.target;
+			
+			// name er heiti dálks, value er gildi
 	
 			if (name) {
 				this.setState({ [name]: value });

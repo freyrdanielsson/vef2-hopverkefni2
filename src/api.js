@@ -1,7 +1,7 @@
 const baseurl = process.env.REACT_APP_SERVICE_URL;
 
 async function get(endpoint) {
-
+// Skítamix með trim því " " fylgdi með
   const token = window.localStorage.getItem('token');
 
   const url = `${baseurl}${endpoint}`;
@@ -14,7 +14,10 @@ async function get(endpoint) {
     options.headers['Authorization'] = `Bearer ${token}`;
   }
 
-  const response = await fetch(url);
+  console.log(options);
+    
+
+  const response = await fetch(url, options);
 
   const result = await response.json();
 

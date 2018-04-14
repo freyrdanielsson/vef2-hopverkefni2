@@ -14,9 +14,8 @@ class LoginHeader extends Component {
 
   render() {
 		const { user } = this.props;
-		
-				
-		if (this.props.user) {
+
+		if(user) {
 			return (
 				<div>
 					<button onClick={this.handleLogout}>Útskrá</button>
@@ -34,7 +33,7 @@ class LoginHeader extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.auth.user,
+		user: state.auth.user,
   }
 }
 

@@ -66,7 +66,8 @@ export const loginUser = (username, password) => {
     if (login.status === 200) {
       const { user, token } = login.result;
       // SKIPTA ÞESSU ÚT SEINNA; EKKI GEYMA USER HÉR HELDUR SÆKJUM HANN EF VIÐ HÖFUM TOKEN
-      localStorage.setItem('user', JSON.stringify(login.result));
+      window.localStorage.setItem('token', token);
+      window.localStorage.setItem('user', JSON.stringify(user))
       dispatch(receiveLogin(user));
     }
   }
@@ -74,7 +75,8 @@ export const loginUser = (username, password) => {
 
 export const logoutUser = () => {
   return async (dispatch) => {
-    localStorage.removeItem('user');
+    window.localStorage.removeItem('token');
+    window.localStorage.removeItem('user');
     dispatch(logout());
   }
 }
