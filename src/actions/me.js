@@ -50,7 +50,7 @@ export const uploadProfile = (profile) => {
     }
 
     if (upload.result.error) {
-      dispatch(uploadError(upload.result.error))
+      dispatch(uploadError([{message: upload.result.error}]))
     }
 
     if (upload.status === 201) {
@@ -67,7 +67,7 @@ export const updateUser = (userInfo, theSame) => {
   if(!theSame) {
     return(dispatch) => dispatch(notTheSame());
   }
-  
+
   return async (dispatch) => {
     dispatch(requestUpload());
     let update;
