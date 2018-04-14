@@ -1,7 +1,7 @@
 const baseurl = process.env.REACT_APP_SERVICE_URL;
 
 async function get(endpoint) {
-  // Skítamix með trim því " " fylgdi með
+
   const token = window.localStorage.getItem('token');
 
   const url = `${baseurl}${endpoint}`;
@@ -24,6 +24,8 @@ async function get(endpoint) {
 export async function post(endpoint, data) {
   const url = `${baseurl}${endpoint}`;
 
+  const token = window.localStorage.getItem('token');
+
   const options = {
     body: JSON.stringify(data),
     headers: {
@@ -32,11 +34,38 @@ export async function post(endpoint, data) {
     method: 'POST',
   };
 
+  if (token) {
+    options.headers['Authorization'] = `Bearer ${token}`;
+  }
+
   const response = await fetch(url, options);
 
   const result = await response.json();
+
+  return { result, status: response.status };
+}
+
+export async function postFile(endpoint, data) {
   
-  
+  const url = `${baseurl}${endpoint}`;
+
+  const token = window.localStorage.getItem('token');
+
+  const options = {
+    body: data,
+    headers: {
+
+    },
+    method: 'POST',
+  };
+
+  if (token) {
+    options.headers['Authorization'] = `Bearer ${token}`;
+  }
+
+  const response = await fetch(url, options);
+
+  const result = await response.json();
 
   return { result, status: response.status };
 }
@@ -45,5 +74,6 @@ export async function post(endpoint, data) {
 
 export default {
   get,
-  post
+  post,
+  postFile
 };
