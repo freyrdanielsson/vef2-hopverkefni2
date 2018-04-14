@@ -7,6 +7,7 @@ import { Redirect } from 'react-router';
 
 import { fetchBooks } from '../../actions/books';
 import Button from '../button';
+import NotFound from '../../routes/not-found';
 
 import './BooksView.css';
 
@@ -16,26 +17,12 @@ class BooksView extends Component {
         url: PropTypes.string,
     }
 
-    handlePrev = (e) => {
-        console.log('handleclick');
-        const { dispatch, url } = this.props;
-        const validUrl = `?offset=${(this.getPage()-1)*10}&limit=10`;
-        dispatch(fetchBooks(validUrl));    
-    }
-    handleNext = (e) => {
-        console.log('handleclick');
-        const { dispatch, url } = this.props;
-        const validUrl = `?offset=${(this.getPage()+1)*10}&limit=10`;
-        dispatch(fetchBooks(validUrl));    
-    }
-
     /**
      * Sækja gildi á ?page= í Url-i
-     * Ef það er ekki valid eða aðrir search params þá skila 1
+     * Ef það er ekki valid eða aðrir search params þá skila -1
      * annars skila page
      */
     getPage() {
-        console.log('hello');
         const { url } = this.props;
         let numPage = 'NaN';
         const pair = url.split('=');
@@ -44,20 +31,19 @@ class BooksView extends Component {
         }
 
         if(isNaN(numPage) || numPage <= 0){
-            return 0;
+            return -1;
         }
         return parseInt(numPage);
     }
 
     componentDidMount() {
         const { dispatch, url } = this.props;
-        const validUrl = `?offset=${(this.getPage())*10}&limit=10`;
+        const validUrl = `?offset=${(this.getPage()-1)*10}&limit=10`;
         dispatch(fetchBooks(validUrl));
     } 
 
     render() {
         const { isFetching, books, error, statusCode, location } = this.props;
-
         if(error || statusCode >= 400) {
             return (
                 <p>Villa við að sækja gögn</p>  
@@ -70,8 +56,14 @@ class BooksView extends Component {
           );
         }
         
-        const page = books.items ? this.getPage() : 0;
+        const page = this.getPage()
         const bookCount = books.items ? books.items.length : 0;
+        const urlOrigin = window.location.origin;
+
+        if(page < 0 || bookCount <= 0){
+            return <NotFound/>;
+        }
+
         return (
           <section>
             <h2>Bækur</h2>
@@ -91,15 +83,12 @@ class BooksView extends Component {
             </ul>
             {bookCount > 0 && (
                 <div>
-                    {page > 0 && 
-                        <Button onClick={this.handlePrev}>
-                            <Link to={`/books?page=${this.getPage() - 1}`}>Fyrri Síða</Link>
-                        </Button>
-                    }
-                    <p>{`Síða ${page+1}`}</p>
-                    <Button onClick={this.handleNext}>
-                        <Link to={`/books?page=${this.getPage() + 1}`}>Næsta Síða</Link>
-                    </Button>
+                    <form action={`${urlOrigin}/books?page=`}>
+                        {page > 1 && <button name="page" type="submit" value={`${page - 1}`}>Fyrri Síða</button>}
+                        <p>{`Síða ${page}`}</p>
+                        {bookCount >= 10 && <button name="page" type="submit" value={`${page + 1}`}>Næsta Síða</button>}
+                    </form>
+                   
                 </div>
             )}
           </section>
