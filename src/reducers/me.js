@@ -1,7 +1,8 @@
 import { 
   UPDATE_USER_REQUEST,
   UPDATE_USER_SUCCESS,
-  UPDATE_USER_FAILURE
+  UPDATE_USER_FAILURE,
+  NOT_THE_SAME,
 } from '../actions/me';
 
 const user = JSON.parse(window.localStorage.getItem('user') || 'null');
@@ -14,7 +15,8 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case UPDATE_USER_REQUEST:    
+    case UPDATE_USER_REQUEST:
+    console.log(2);
       return {
         ...state,
         isFetching: action.isFetching,
@@ -31,6 +33,11 @@ export default (state = initialState, action) => {
         ...state,
         isFetching: action.isFetching,
         message: action.message
+      };
+    case NOT_THE_SAME:
+      return {
+        ...state,
+        message: [action.message],
       };
     default:
       return state;

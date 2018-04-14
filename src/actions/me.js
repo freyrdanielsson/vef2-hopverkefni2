@@ -3,6 +3,7 @@ import api from '../api';
 export const UPDATE_USER_REQUEST = 'UPDATE_USER_REQUEST';
 export const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
 export const UPDATE_USER_FAILURE = 'UPDATE_USER_FAILURE';
+export const NOT_THE_SAME = 'NOT_THE_SAME';
 
 function requestUpload() {
   return {
@@ -25,6 +26,13 @@ function uploadError(message) {
     type: UPDATE_USER_FAILURE,
     isFetching: false,
     message
+  }
+}
+
+function notTheSame() {
+  return {
+    type: NOT_THE_SAME,
+    message: {field: 'Oops', message: 'Passwords do not match'},
   }
 }
 
@@ -53,7 +61,11 @@ export const uploadProfile = (profile) => {
 }
 
 // Thunk!
-export const updateUser = (userInfo) => {
+export const updateUser = (userInfo, theSame) => {
+  if(!theSame) {
+    return(dispatch) => dispatch(notTheSame());
+  }
+  
   return async (dispatch) => {
     dispatch(requestUpload());
     let update;
