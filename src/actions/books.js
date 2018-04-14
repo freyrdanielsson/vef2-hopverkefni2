@@ -30,13 +30,13 @@ function receiveBooks(books) {
     }
 }
 
-export const fetchBooks = () => {
+export const fetchBooks = (url) => {
+  
     return async (dispatch) => {
       dispatch(requestBooks());
-  
       let books;
       try {
-        books = await api.get('/books');
+        books = await api.get(`/books${url}`);
       } catch (e) {
         return dispatch(booksError(e))
       }
