@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { logoutUser } from '../../actions/auth';
 import { Link } from 'react-router-dom';
 
+import Button from '../button';
+
 import './LoginHeader.css';
 
 class LoginHeader extends Component {
@@ -13,13 +15,20 @@ class LoginHeader extends Component {
 	}
 
   render() {
-		const { user } = this.props;
+		const { user, profilePic } = this.props;
 
 		if(user) {
+			const profile = profilePic ? profilePic : '/profile.jpg';
+
 			return (
-				<div>
-					<button onClick={this.handleLogout}>Útskrá</button>
-					<p>{user.username}</p>
+				<div className="user">
+					<div className="user profile">
+						<img className="user profile img" src={profilePic} alt={user.usename}/>
+					</div>
+					<div className="user info">
+						<Link to="/profile">{user.username}</Link>
+						<Button onClick={this.handleLogout} className="logout">Útskrá</Button>
+					</div>
 				</div>
 			);
 		}
@@ -34,6 +43,7 @@ class LoginHeader extends Component {
 const mapStateToProps = (state) => {
   return {
 		user: state.auth.user,
+		profilePic: state.me.user.image
   }
 }
 
