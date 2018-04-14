@@ -13,7 +13,11 @@ import './BookIDView.css';
 class BookIDView extends Component {
 
     static propTypes = {
-        id: PropTypes.string,
+        id: PropTypes.string
+    }
+
+    static contextTypes = {
+        router: PropTypes.object
     }
 
     componentDidMount() {
@@ -22,7 +26,7 @@ class BookIDView extends Component {
     } 
 
     render() {
-        const { isFetching, books, error, statusCode, location } = this.props;
+        const { isFetching, books, error, statusCode, location, id } = this.props;
         if(statusCode === 404){
             return <NotFound/>;
         }
@@ -51,9 +55,9 @@ class BookIDView extends Component {
                         <p>{books.pagecount && (`${books.pagecount} síður`)}</p>
                         <p>{books.published && (`Gefin út ${books.published}`)}</p>
                         <p>{books.language && (`Tungumál: ${books.language}`)}</p>
-                        <Link to="">Breyta bók</Link>
+                        <Link to={`/books/${id}/edit`}>Breyta bók</Link>
                         <Button>Lesin bók</Button>
-                        <Button>Til baka</Button>
+                        <Button onClick={this.context.router.history.goBack}>Til baka</Button>
                     </div>
                 )}
             </section>     
