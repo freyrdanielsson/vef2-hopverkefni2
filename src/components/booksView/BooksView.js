@@ -18,34 +18,47 @@ class BooksView extends Component {
     }
 
     /**
-     * Sækja gildi á ?page= í Url-i
-     * Ef það er ekki valid eða aðrir search params þá skila -1
-     * annars skila page
+     * Fall sem fær inn gildi og athugar hvort það sé valid
+     * fyrir 'page' parametran í Url-inu
      */
-    getPage() {
-        // Sækja url sem var sent inn
-        const { url } = this.props;
-        // Ath hvort við séum á /books (þá sendur inn '') sem er löglegt
-        if(url === ''){
-            return 1;
-        }
-        // Sækja params og ath hvort einhver þeirra sé ?page
-        let numPage = 'NaN';
-        const pair = url.split('=');
-        if (decodeURIComponent(pair[0]) === '?page') {
-            numPage = decodeURIComponent(pair[1]);
-        }
-
-        // Ath hvort gildið við ?page var til eða var tala
-        if(isNaN(numPage) || numPage <= 0){
+    getPage(page) {
+        // Ef það var ekki tala eða var mínustala
+        if(isNaN(page) || page <= 0){
             return -1;
         }
-        return parseInt(numPage);
+        return parseInt(page);
+    }
+
+    /**
+     * Fall sem notar regular expressions og
+     * Skilar object með search params og gildi þess search param.
+     */
+    getUrlParams(){
+        const urlParams = {
+            page: 1,
+            query: ''
+        }
+
+        let match,
+            pl     = /\+/g,
+            search = /([^&=]+)=?([^&]*)/g,
+            decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+            query  = window.location.search.substring(1);
+
+        while (match = search.exec(query)){
+            urlParams[decode(match[1])] = decode(match[2]);
+        }
+
+        // Validate-a page
+        urlParams.page = this.getPage(urlParams.page);
+        // Skila öllum url search params
+        return urlParams;
     }
 
     componentDidMount() {
         const { dispatch, url } = this.props;
-        const validUrl = `?offset=${(this.getPage()-1)*10}&limit=10`;
+        const params = this.getUrlParams();
+        const validUrl = params.page <= 0 ? '' : `?search=${params.query}&offset=${(params.page-1)*10}&limit=10`;
         dispatch(fetchBooks(validUrl));
     } 
 
@@ -63,13 +76,10 @@ class BooksView extends Component {
           );
         }
         
-        const page = this.getPage()
+        const params = this.getUrlParams();
         const bookCount = books.items ? books.items.length : 0;
-        const urlOrigin = window.location.origin;
-        console.log('page: ' + page);
-        console.log('bookCount: ' + bookCount);
         
-        if(page <= 0 || bookCount <= 0){
+        if(params.page <= 0 || bookCount <= 0){
             return <NotFound/>;
         }
 
@@ -92,10 +102,11 @@ class BooksView extends Component {
             </ul>
             {bookCount > 0 && (
                 <div>
-                    <form action={`${urlOrigin}/books?page=`}>
-                        {page > 1 && <button name="page" type="submit" value={`${page - 1}`}>Fyrri Síða</button>}
-                        <p>{`Síða ${page}`}</p>
-                        {bookCount >= 10 && <button name="page" type="submit" value={`${page + 1}`}>Næsta Síða</button>}
+                    <form action={`${window.location.origin}/books?query=&page=`}>
+                        <input type="hidden" name="query" value={`${params.query}`} />
+                        {params.page > 1 && <button name="page" type="submit" value={`${params.page - 1}`}>Fyrri Síða</button>}
+                        <p>{`Síða ${params.page}`}</p>
+                        {bookCount >= 10 && <button name="page" type="submit" value={`${params.page + 1}`}>Næsta Síða</button>}
                     </form>
                    
                 </div>
