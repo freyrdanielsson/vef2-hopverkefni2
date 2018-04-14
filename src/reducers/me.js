@@ -1,7 +1,8 @@
 import { 
   UPDATE_USER_REQUEST,
   UPDATE_USER_SUCCESS,
-  UPDATE_USER_FAILURE
+  UPDATE_USER_FAILURE,
+  NOT_THE_SAME,
 } from '../actions/me';
 
 const user = JSON.parse(window.localStorage.getItem('user') || 'null');
@@ -31,6 +32,11 @@ export default (state = initialState, action) => {
         ...state,
         isFetching: action.isFetching,
         message: action.message
+      };
+    case NOT_THE_SAME:
+      return {
+        ...state,
+        message: [action.message],
       };
     default:
       return state;

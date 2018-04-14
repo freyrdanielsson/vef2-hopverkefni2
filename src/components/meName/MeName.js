@@ -10,7 +10,7 @@ import './MeName.css';
 
 class MeName extends Component {
 
-	state = {name: ''};
+	state = {name: '', password: '', secondPassword: ''};
 
 	handleInputChange = (e) => {
 		const { name, value } = e.target;
@@ -22,16 +22,21 @@ class MeName extends Component {
 
 	handleSubmit = async (e) => {
 		e.preventDefault();
-
+		const type = e.target.className;
 		const { dispatch } = this.props;
-		const { name } = this.state;
-		
-		dispatch(updateUser({name: name}));
+
+		const info = { [type]: this.state[type]};
+		let theSame = true;
+		if(type === 'password') {
+			theSame = this.state.password === this.state.secondPassword
+		}
+
+		dispatch(updateUser(info, theSame));
 	}
 
 	render() {
-		const {isFetching } = this.props;
-		const { name } = this.state;
+		const {isFetching, type, label, buttonText, className } = this.props;
+		const { theSame } = this.state
 
 		if (isFetching) {
 			return (
@@ -45,12 +50,17 @@ class MeName extends Component {
 		return (
 			<div>
 			
-				<form onSubmit={this.handleSubmit}>
+				<form className={className} onSubmit={this.handleSubmit}>
 					<div>
-						<label htmlFor="username">Notendanafn:</label>
-						<input id="name" type="text" name="name" value={name} onChange={this.handleInputChange} />
+						{label.map((info, i) => (
+						<div key={i}>
+							<label htmlFor={info.field}>{`${info.label}: `}</label>
+							<input type={type} name={info.field} value={this.state[info.field]} onChange={this.handleInputChange} />
+						</div>
+						))}
 					</div>
-					<Button>Uppfæra Nafn</Button>
+					<Button>{buttonText}</Button>
+
 				</form>
 			</div>
 		);
@@ -59,7 +69,7 @@ class MeName extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    isFetching: state.me.isFetching,
+		isFetching: state.me.isFetching,
   }
 }
 
