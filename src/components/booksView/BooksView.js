@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import { Redirect } from 'react-router';
 
 import { fetchBooks } from '../../actions/books';
@@ -12,11 +11,6 @@ import NotFound from '../../routes/not-found';
 import './BooksView.css';
 
 class BooksView extends Component {
-
-    static propTypes = {
-        url: PropTypes.string,
-    }
-
     /**
      * Fall sem fær inn gildi og athugar hvort það sé valid
      * fyrir 'page' parametran í Url-inu
@@ -56,7 +50,7 @@ class BooksView extends Component {
     }
 
     componentDidMount() {
-        const { dispatch, url } = this.props;
+        const { dispatch } = this.props;
         const params = this.getUrlParams();
         const validUrl = params.page <= 0 ? '' : `?search=${params.query}&offset=${(params.page-1)*10}&limit=10`;
         dispatch(fetchBooks(validUrl));
