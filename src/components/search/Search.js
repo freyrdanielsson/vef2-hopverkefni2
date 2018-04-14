@@ -7,14 +7,14 @@ import './Search.css';
 class Search extends Component {
 
   onClick = (e) => {
-    e.preventDefault();
     console.log('leita');
   }
 
   render() {
     return (
-      <form>
-        <input type="search" placeholder="Bókaleit"></input>
+      <form action={`${window.location.origin}/books?query=&page=`}>
+        <input type="search" name="query" placeholder="Bókaleit"></input>
+        <input type="hidden" name="page" value={1} />
         <Button className="leitarButton" onClick={this.onClick}>Leita</Button>
       </form>
     );

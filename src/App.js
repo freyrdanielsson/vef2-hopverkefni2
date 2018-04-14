@@ -13,6 +13,7 @@ import NotFound from './routes/not-found';
 
 import Register from './routes/register';
 import Books from './routes/books';
+import BookID from './routes/bookID';
 
 /* todo fleiri routes */
 
@@ -37,6 +38,7 @@ class App extends Component {
             <UserRoute path="/register" authenticated={!isAuthenticated} redirect="/profile" component={Register} />
             <UserRoute path="/profile" authenticated={isAuthenticated} redirect="/login" component={Profile} />
             <Route exact path="/books" component={Books} />
+            <Route exact path="/books/:id" component={BookID} />
 
 
             {/* todo fleiri route */}
