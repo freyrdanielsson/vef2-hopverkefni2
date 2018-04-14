@@ -23,13 +23,20 @@ class BooksView extends Component {
      * annars skila page
      */
     getPage() {
+        // Sækja url sem var sent inn
         const { url } = this.props;
+        // Ath hvort við séum á /books (þá sendur inn '') sem er löglegt
+        if(url === ''){
+            return 1;
+        }
+        // Sækja params og ath hvort einhver þeirra sé ?page
         let numPage = 'NaN';
         const pair = url.split('=');
         if (decodeURIComponent(pair[0]) === '?page') {
             numPage = decodeURIComponent(pair[1]);
         }
 
+        // Ath hvort gildið við ?page var til eða var tala
         if(isNaN(numPage) || numPage <= 0){
             return -1;
         }
@@ -59,8 +66,10 @@ class BooksView extends Component {
         const page = this.getPage()
         const bookCount = books.items ? books.items.length : 0;
         const urlOrigin = window.location.origin;
-
-        if(page < 0 || bookCount <= 0){
+        console.log('page: ' + page);
+        console.log('bookCount: ' + bookCount);
+        
+        if(page <= 0 || bookCount <= 0){
             return <NotFound/>;
         }
 
