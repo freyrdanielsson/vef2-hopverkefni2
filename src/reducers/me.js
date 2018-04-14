@@ -15,8 +15,7 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case UPDATE_USER_REQUEST:
-    console.log(2);
+    case UPDATE_USER_REQUEST:    
       return {
         ...state,
         isFetching: action.isFetching,

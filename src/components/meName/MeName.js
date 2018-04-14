@@ -47,10 +47,6 @@ class MeName extends Component {
 			);
 		}
 
-		if(!theSame) {
-			
-		}
-
 		return (
 			<div>
 			
@@ -64,6 +60,7 @@ class MeName extends Component {
 						))}
 					</div>
 					<Button>{buttonText}</Button>
+
 				</form>
 			</div>
 		);
@@ -73,7 +70,6 @@ class MeName extends Component {
 const mapStateToProps = (state) => {
   return {
 		isFetching: state.me.isFetching,
-		theSame: state.me.password
   }
 }
 

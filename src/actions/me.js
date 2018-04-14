@@ -5,6 +5,7 @@ export const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
 export const UPDATE_USER_FAILURE = 'UPDATE_USER_FAILURE';
 export const NOT_THE_SAME = 'NOT_THE_SAME';
 
+
 function requestUpload() {
   return {
     type: UPDATE_USER_REQUEST,
@@ -61,6 +62,7 @@ export const uploadProfile = (profile) => {
 }
 
 // Thunk!
+
 export const updateUser = (userInfo, theSame) => {
   if(!theSame) {
     return(dispatch) => dispatch(notTheSame());
