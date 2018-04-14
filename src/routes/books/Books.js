@@ -7,7 +7,7 @@ class Books extends Component {
 
     render() {
         return (
-            <BooksView url={this.props.location.search}/>
+            <BooksView />
         );
   }
 }
