@@ -70,10 +70,34 @@ export async function postFile(endpoint, data) {
   return { result, status: response.status };
 }
 
+
+export async function patch(endpoint, data) {
+  const url = `${baseurl}${endpoint}`;
+  const token = window.localStorage.getItem('token');
+
+  const options = {
+    body: JSON.stringify(data),
+    headers: {
+      'content-type': 'application/json',
+    },
+    method: 'PATCH',
+  };
+
+  if (token) {
+    options.headers['Authorization'] = `Bearer ${token}`;
+  }
+
+  const response = await fetch(url, options);
+  const result = await response.json();
+
+  return { result, status: response.status };
+}
+
 /* todo aðrar aðgerðir */
 
 export default {
   get,
   post,
-  postFile
+  postFile,
+  patch
 };

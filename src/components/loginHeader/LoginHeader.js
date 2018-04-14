@@ -43,7 +43,7 @@ class LoginHeader extends Component {
 const mapStateToProps = (state) => {
   return {
 		user: state.auth.user,
-		profilePic: state.me.user.image
+		profilePic: state.me.profilePic,
   }
 }
 

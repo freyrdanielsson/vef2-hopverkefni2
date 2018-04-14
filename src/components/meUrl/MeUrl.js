@@ -32,6 +32,7 @@ class MeUrl extends Component {
 	render() {
 		const {isFetching, message} = this.props;
 		const { profile } = this.state;
+		
 
 		if (isFetching) {
 			return (
@@ -45,7 +46,13 @@ class MeUrl extends Component {
 		return (
 			<div>
 				{message && (
-					<p>{message}</p>
+					<ul>{message.map((error, i) => (
+						<ul key={i}>
+							<dt>{error.field}</dt>
+							<dd>{error.message}</dd>
+						</ul>
+						))}
+					</ul>
 				)}
 			
 				<form onSubmit={this.handleSubmit} encType="multipart/form-data">
