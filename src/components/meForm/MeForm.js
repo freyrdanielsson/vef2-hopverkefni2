@@ -6,9 +6,9 @@ import { updateUser } from '../../actions/me';
 
 import Button from '../button';
 
-import './MeName.css';
+import './MeForm.css';
 
-class MeName extends Component {
+class MeForm extends Component {
 
 	state = {name: '', password: '', secondPassword: ''};
 
@@ -31,14 +31,14 @@ class MeName extends Component {
 			theSame = this.state.password === this.state.secondPassword
 		}
 
-		dispatch(updateUser(info, theSame));
+		dispatch(updateUser(info, theSame, this.props.className));
 	}
 
 	render() {
 		const {isFetching, type, label, buttonText, className } = this.props;
 		const { theSame } = this.state
 
-		if (isFetching) {
+		if (isFetching === className) {
 			return (
 			<div>
 				<Helmet defaultTitle="Uppfæri nafn.."/>
@@ -73,4 +73,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(MeName);
+export default connect(mapStateToProps)(MeForm);

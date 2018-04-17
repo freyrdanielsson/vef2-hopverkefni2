@@ -10,7 +10,7 @@ import './MeUrl.css';
 
 class MeUrl extends Component {
 
-	state = {profile: ''};
+	state = { profile: '' };
 
 	handleInputChange = (e) => {
 		const state = this.state
@@ -26,15 +26,19 @@ class MeUrl extends Component {
 
 		let formData = new FormData();
 		formData.append('profile', profile);
-		dispatch(uploadProfile(formData));
+		console.log(this.props.className);
+		
+		dispatch(uploadProfile(formData, this.props.className));
 	}
 
 	render() {
-		const {isFetching, message} = this.props;
+		const { isFetching, message, className } = this.props;
 		const { profile } = this.state;
+
+		
 		
 
-		if (isFetching) {
+		if (isFetching === className) {
 			return (
 			<div>
 				<Helmet defaultTitle="Skrái inn.."/>

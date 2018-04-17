@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import MeUrl from '../../components/meUrl';
-import MeName from '../../components/meName';
+import MeForm from '../../components/meForm';
 
 export default class Profile extends Component {
   static defaultProps = { 
@@ -14,9 +14,9 @@ export default class Profile extends Component {
     return (
       <div>
         <h1>Upplýsingar</h1>
-        <MeUrl/>
-        <MeName className='name' type="text" label={this.props.name} buttonText="Uppfæra nafn"/>
-        <MeName className='password' type="password" label={this.props.password} buttonText="Uppfæra lykilorð"/>
+        <MeUrl className='profile'/>
+        <MeForm className='name' type="text" label={this.props.name} buttonText="Uppfæra nafn"/>
+        <MeForm className='password' type="password" label={this.props.password} buttonText="Uppfæra lykilorð"/>
       </div>
     );
   }

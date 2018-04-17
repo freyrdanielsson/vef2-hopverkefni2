@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 
+import Button from '../button';
+
 import { loginUser } from '../../actions/auth';
 
 import './LoginForm.css';
@@ -66,7 +68,7 @@ class LoginForm extends Component {
 						<input id="password" type="password" name="password" value={password} onChange={this.handleInputChange} />
 					</div>
 
-					<button disabled={isFetching}>Innskrá</button>
+					<Button disabled={isFetching}>Innskrá</Button>
 				</form>
 			</div>
 		);

@@ -8,7 +8,7 @@ import {
 const user = JSON.parse(window.localStorage.getItem('user') || 'null');
 
 const initialState = {
-  isFetching: false,
+  isFetching: null,
   profilePic: user ? user.image : null,
   user,
 };
