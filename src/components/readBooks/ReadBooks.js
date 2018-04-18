@@ -12,6 +12,7 @@ import NotFound from '../../routes/not-found';
 import './ReadBooks.css';
 
 class ReadBooks extends Component {
+    state = { page: 0 }
     /**
      * Fall sem fær inn gildi og athugar hvort það sé valid
      * fyrir 'page' parametran í Url-inu
@@ -52,6 +53,7 @@ class ReadBooks extends Component {
     componentDidMount() {
         const params = this.getUrlParams();
         const { dispatch } = this.props;
+        this.setState({page: params.page});
         const validUrl = params.page <= 0 ? '' : `?offset=${(params.page-1)*10}`;
         dispatch(fetchRead(validUrl, this.props.className));
     }
@@ -61,12 +63,21 @@ class ReadBooks extends Component {
 
 		const { dispatch } = this.props;
 		
-	}
+    }
+    
+    handleChange = async (pageNr) => {
+        this.setState({page: pageNr});
+        window.history.pushState(null, '', `/profile?page=${pageNr}`);
+        
+        const { dispatch } = this.props;
+        const validUrl = pageNr <= 0 ? '' : `?offset=${(pageNr-1)*10}`;
+        dispatch(fetchRead(validUrl, this.props.className));
+    }
 
     render() {
         const { books, isFetching, className } = this.props;
         
-        const params = this.getUrlParams();
+        const page = this.state.page;
                 
         const bookCount = books ? books.length : 0;
 
@@ -78,7 +89,7 @@ class ReadBooks extends Component {
 			);
         }
         
-        if(params.page <= 0 || bookCount <= 0){
+        if(page <= 0 || bookCount <= 0){
             return <NotFound/>;
         }
         
@@ -103,12 +114,9 @@ class ReadBooks extends Component {
                 </ul>
                 {bookCount > 0 && (
                 <div>
-                    <form action={`${window.location.origin}/profile?page=`}>
-                        {params.page > 1 && <Button name="page" value={`${params.page - 1}`}>Fyrri Síða</Button>}
-                        <p>{`Síða ${params.page}`}</p>
-                        {bookCount >= 10 && <Button name="page" value={`${params.page + 1}`}>Næsta Síða</Button>}
-                    </form>
-                   
+                    {page > 1 && <Button onClick={() => this.handleChange(page - 1)}>Fyrri Síða</Button>}
+                    <p>{`Síða ${page}`}</p>
+                    {bookCount >= 10 && <Button onClick={() => this.handleChange(page + 1)}>Næsta Síða</Button>}
                 </div>
             )}
             </div>
