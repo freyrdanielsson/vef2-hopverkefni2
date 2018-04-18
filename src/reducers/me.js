@@ -2,15 +2,17 @@ import {
   UPDATE_USER_REQUEST,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_FAILURE,
+  READ_BOOKS_SUCCESS,
   NOT_THE_SAME,
 } from '../actions/me';
 
 const user = JSON.parse(window.localStorage.getItem('user') || 'null');
 
 const initialState = {
-  isFetching: false,
+  isFetching: null,
   profilePic: user ? user.image : null,
   user,
+  books: '',
 };
 
 export default (state = initialState, action) => {
@@ -37,6 +39,13 @@ export default (state = initialState, action) => {
       return {
         ...state,
         message: [action.message],
+      };
+      case READ_BOOKS_SUCCESS:
+      return {
+        ...state,
+        isFetching: action.isFetching,
+        books: action.books,
+        message: action.message,
       };
     default:
       return state;

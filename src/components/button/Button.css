@@ -10,3 +10,7 @@
 .button.logout {
   padding: 5px 10px;
 }
+
+.button.delete {
+  background-color: rgb(226, 49, 49);
+}
