@@ -11,6 +11,15 @@ import NotFound from '../../routes/not-found';
 
 import './ReadBooks.css';
 
+/**
+ * 
+ * @param {*} event - Back takki í browser
+ * Refreshar síðu ef að ýtt er á back takka (Button component)
+ */
+window.onpopstate = function(event) {
+    window.location.reload();
+  };
+
 class ReadBooks extends Component {
     state = { page: 0 }
     /**
