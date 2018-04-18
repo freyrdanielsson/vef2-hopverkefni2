@@ -93,11 +93,33 @@ export async function patch(endpoint, data) {
   return { result, status: response.status };
 }
 
+export async function deleteBook(endpoint) {
+  const url = `${baseurl}${endpoint}`;
+  const token = window.localStorage.getItem('token');
+
+  const options = {
+    headers: {
+
+    },
+    method: 'DELETE',
+  };
+
+  if (token) {
+    options.headers['Authorization'] = `Bearer ${token}`;
+  }
+
+  const response = await fetch(url, options);
+  
+
+  return { status: response.status };
+}
+
 /* todo aðrar aðgerðir */
 
 export default {
   get,
   post,
   postFile,
-  patch
+  patch,
+  deleteBook
 };

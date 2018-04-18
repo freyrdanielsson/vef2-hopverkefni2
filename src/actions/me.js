@@ -101,6 +101,8 @@ export const updateUser = (userInfo, theSame, className) => {
 
 export const fetchRead = (url, className) => {
   return async (dispatch) => {
+    console.log(url, className);
+    
     dispatch(requestUpload(className));
     let read;
     try {
@@ -117,5 +119,19 @@ export const fetchRead = (url, className) => {
       const { items } = read.result;
       dispatch(receiveBooks(items));
     }
+  }
+}
+
+export const deleteBook = (id, className, url) => {
+  return async (dispatch) => {
+    try {
+      const del = await api.deleteBook(`/users/me/read/${id}`);
+    } catch (e) {
+      console.log(e);
+      
+      return //dispatch(uploadError(e))
+    }
+
+    dispatch(fetchRead(url, className));
   }
 }

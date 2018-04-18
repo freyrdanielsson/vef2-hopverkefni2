@@ -4,7 +4,7 @@ import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router';
 
-import { fetchRead } from '../../actions/me';
+import { fetchRead, deleteBook } from '../../actions/me';
 import Button from '../button';
 import NotFound from '../../routes/not-found';
 // import NotFound from '../../routes/not-found';
@@ -68,19 +68,20 @@ class ReadBooks extends Component {
     }
 
     handleDelete = async (id) => {
-        console.log(id);
-
-		const { dispatch } = this.props;
-		
+        const page = this.state.page;
+        const { dispatch } = this.props;
+        const validUrl = page <= 0 ? '' : `?offset=${(page-1)*10}`;
+		dispatch(deleteBook(id, this.props.className, validUrl));
     }
     
     handleChange = async (pageNr) => {
-        this.setState({page: pageNr});
         window.history.pushState(null, '', `/profile?page=${pageNr}`);
         
         const { dispatch } = this.props;
         const validUrl = pageNr <= 0 ? '' : `?offset=${(pageNr-1)*10}`;
         dispatch(fetchRead(validUrl, this.props.className));
+
+        this.setState({page: pageNr});
     }
 
     render() {
@@ -99,7 +100,12 @@ class ReadBooks extends Component {
         }
         
         if(page <= 0 || bookCount <= 0){
-            return <NotFound/>;
+            return (
+                <div>
+                    <p>Oops, ekki fleiri bækur</p>
+                    <Button onClick={() => this.handleChange(1)}>Fyrsta síða</Button>
+                </div>
+            )
         }
         
         return (
@@ -116,7 +122,7 @@ class ReadBooks extends Component {
                             <div>
                                 <p>{book.review && (`Um bók: ${book.review}`)}</p>
                             </div>
-                            <Button className="delete" onClick={() => this.handleDelete(book.id)}>Eyða</Button>
+                            <Button className="delete" onClick={() => this.handleDelete(book.id, page)}>Eyða</Button>
                     </li>
                     )
                     }))}
