@@ -3,6 +3,7 @@ import api from '../api';
 export const UPDATE_USER_REQUEST = 'UPDATE_USER_REQUEST';
 export const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
 export const UPDATE_USER_FAILURE = 'UPDATE_USER_FAILURE';
+export const READ_BOOKS_SUCCESS = 'READ_BOOKS_SUCCESS';
 export const NOT_THE_SAME = 'NOT_THE_SAME';
 
 
@@ -18,6 +19,15 @@ function receiveUpload(user) {
     type: UPDATE_USER_SUCCESS,
     isFetching: null,
     user,
+    message: null,
+  }
+}
+
+function receiveBooks(books) {
+  return {
+    type: READ_BOOKS_SUCCESS,
+    isFetching: null,
+    books,
     message: null,
   }
 }
@@ -85,6 +95,27 @@ export const updateUser = (userInfo, theSame, className) => {
       const user = update.result;
       window.localStorage.setItem('user', JSON.stringify(user))
       dispatch(receiveUpload(user));
+    }
+  }
+}
+
+export const fetchRead = (url, className) => {
+  return async (dispatch) => {
+    dispatch(requestUpload(className));
+    let read;
+    try {
+      read = await api.get(`/users/me/read${url}`);
+    } catch (e) {
+      return dispatch(uploadError(e))
+    }
+
+    if (read.result.error) {
+      dispatch(uploadError(read.result.error))
+    }
+
+    if (read.status === 200) {
+      const { items } = read.result;
+      dispatch(receiveBooks(items));
     }
   }
 }

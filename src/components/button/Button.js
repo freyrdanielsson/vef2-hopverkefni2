@@ -18,12 +18,12 @@ export default class Button extends Component {
   }
 
   render() {
-    const { children, className, onClick } = this.props;
+    const { children, className, onClick, name, value } = this.props;
 
     const classes = `button ${className}`
 
     return (
-      <button onClick={onClick} className={classes}>{children}</button>
+      <button name={name} onClick={onClick} value={value} className={classes}>{children}</button>
     );
   }
 
