@@ -38,7 +38,7 @@ class App extends Component {
             <UserRoute path="/register" authenticated={!isAuthenticated} redirect="/profile" component={Register} />
             <UserRoute path="/profile" authenticated={isAuthenticated} redirect="/login" component={Profile} />
             <Route exact path="/books" component={Books} />
-            <Route exact path="/books/:id" component={BookID} />
+            <Route path="/books/:id" component={BookID} />
 
 
             {/* todo fleiri route */}

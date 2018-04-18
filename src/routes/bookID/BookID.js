@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import Helmet from 'react-helmet';
 
-import BookIDView from '../../components/bookIDView';
+import BookIDFetch from '../../components/bookIDFetch';
 
 class BookID extends Component {
 
     render() {
         return (
-            <BookIDView id={this.props.match.params.id} />
+            <BookIDFetch id={this.props.match.params.id} url={this.props.location.pathname} />
         );
   }
 }

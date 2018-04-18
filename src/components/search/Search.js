@@ -15,7 +15,7 @@ class Search extends Component {
       <form action={`${window.location.origin}/books?query=&page=`}>
         <input type="search" name="query" placeholder="Bókaleit"></input>
         <input type="hidden" name="page" value={1} />
-        <Button className="leitarButton" onClick={this.onClick}>Leita</Button>
+        <Button type="submit" className="leitarButton" onClick={this.onClick}>Leita</Button>
       </form>
     );
   }
