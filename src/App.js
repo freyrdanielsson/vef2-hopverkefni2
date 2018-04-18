@@ -36,7 +36,7 @@ class App extends Component {
             {/* UserRoute renderar component ef authenticated=true annars redirectar hann */}
             <UserRoute path="/login" authenticated={!isAuthenticated} redirect="/profile" component={Login} />
             <UserRoute path="/register" authenticated={!isAuthenticated} redirect="/profile" component={Register} />
-            <UserRoute path="/profile" authenticated={isAuthenticated} redirect="/login" component={Profile} />
+            <UserRoute exact path="/profile" authenticated={isAuthenticated} redirect="/login" component={Profile} />
             <Route exact path="/books" component={Books} />
             <Route exact path="/books/:id" component={BookID} />
 

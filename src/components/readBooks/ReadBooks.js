@@ -4,14 +4,24 @@ import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router';
 
-import { fetchRead } from '../../actions/me';
+import { fetchRead, deleteBook } from '../../actions/me';
 import Button from '../button';
 import NotFound from '../../routes/not-found';
 // import NotFound from '../../routes/not-found';
 
 import './ReadBooks.css';
 
+/**
+ * 
+ * @param {*} event - Back takki í browser
+ * Refreshar síðu ef að ýtt er á back takka (Button component)
+ */
+window.onpopstate = function(event) {
+    window.location.reload();
+  };
+
 class ReadBooks extends Component {
+    state = { page: 0 }
     /**
      * Fall sem fær inn gildi og athugar hvort það sé valid
      * fyrir 'page' parametran í Url-inu
@@ -52,21 +62,32 @@ class ReadBooks extends Component {
     componentDidMount() {
         const params = this.getUrlParams();
         const { dispatch } = this.props;
+        this.setState({page: params.page});
         const validUrl = params.page <= 0 ? '' : `?offset=${(params.page-1)*10}`;
         dispatch(fetchRead(validUrl, this.props.className));
     }
 
     handleDelete = async (id) => {
-        console.log(id);
+        const page = this.state.page;
+        const { dispatch } = this.props;
+        const validUrl = page <= 0 ? '' : `?offset=${(page-1)*10}`;
+		dispatch(deleteBook(id, this.props.className, validUrl));
+    }
+    
+    handleChange = async (pageNr) => {
+        window.history.pushState(null, '', `/profile?page=${pageNr}`);
+        
+        const { dispatch } = this.props;
+        const validUrl = pageNr <= 0 ? '' : `?offset=${(pageNr-1)*10}`;
+        dispatch(fetchRead(validUrl, this.props.className));
 
-		const { dispatch } = this.props;
-		
-	}
+        this.setState({page: pageNr});
+    }
 
     render() {
         const { books, isFetching, className } = this.props;
         
-        const params = this.getUrlParams();
+        const page = this.state.page;
                 
         const bookCount = books ? books.length : 0;
 
@@ -78,8 +99,13 @@ class ReadBooks extends Component {
 			);
         }
         
-        if(params.page <= 0 || bookCount <= 0){
-            return <NotFound/>;
+        if(page <= 0 || bookCount <= 0){
+            return (
+                <div>
+                    <p>Oops, ekki fleiri bækur</p>
+                    <Button onClick={() => this.handleChange(1)}>Fyrsta síða</Button>
+                </div>
+            )
         }
         
         return (
@@ -96,19 +122,16 @@ class ReadBooks extends Component {
                             <div>
                                 <p>{book.review && (`Um bók: ${book.review}`)}</p>
                             </div>
-                            <Button className="delete" onClick={() => this.handleDelete(book.id)}>Eyða</Button>
+                            <Button className="delete" onClick={() => this.handleDelete(book.id, page)}>Eyða</Button>
                     </li>
                     )
                     }))}
                 </ul>
                 {bookCount > 0 && (
                 <div>
-                    <form action={`${window.location.origin}/profile?page=`}>
-                        {params.page > 1 && <Button name="page" value={`${params.page - 1}`}>Fyrri Síða</Button>}
-                        <p>{`Síða ${params.page}`}</p>
-                        {bookCount >= 10 && <Button name="page" value={`${params.page + 1}`}>Næsta Síða</Button>}
-                    </form>
-                   
+                    {page > 1 && <Button onClick={() => this.handleChange(page - 1)}>Fyrri Síða</Button>}
+                    <p>{`Síða ${page}`}</p>
+                    {bookCount >= 10 && <Button onClick={() => this.handleChange(page + 1)}>Næsta Síða</Button>}
                 </div>
             )}
             </div>
