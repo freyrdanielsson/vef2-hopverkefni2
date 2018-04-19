@@ -19,6 +19,8 @@ class BookIDEdit extends Component {
         published: this.props.books.published,
         pageCount: this.props.books.pagecount,
         language: this.props.books.language,
+        category: this.props.books.category,
+        categories: this.props.categories,
         initial: true,
         errors: {}
     } 
@@ -29,15 +31,15 @@ class BookIDEdit extends Component {
 
 	handleSubmit = async (e) => {
         e.preventDefault();
-        const { dispatch, id, isFetching } = this.props;
+        const { dispatch, id, isPatching } = this.props;
         this.setState({ errors: {}, initial: false });
-        const patched = (({ title, author, description, isbn10, isbn13, published, pageCount, language }) => (
-            { title, author, description, isbn10, isbn13, published, pageCount, language }))(this.state);
+        const patched = (({ title, author, category, description, isbn10, isbn13, published, pageCount, language }) => (
+            { title, author, category, description, isbn10, isbn13, published, pageCount, language }))(this.state);
         dispatch(patchBook(patched, id));
     }
     
     handleInputChange = (e) => {
-		const { name, value } = e.target;
+        const { name, value} = e.target;
 		if (name) {
 			this.setState({ [name]: value });
 		}
@@ -48,11 +50,12 @@ class BookIDEdit extends Component {
         this.context.router.history.push(`/books/${id}`);
     }
 
-    render() {
-        const { book, isFetching, message, id } = this.props;
-        const { title, author, description, isbn10, isbn13, published, pageCount, language, errors, initial} = this.state;
 
-		if (isFetching) {
+    render() {
+        const { book, isPatching, message, id } = this.props;
+        const { title, author, description, isbn10, isbn13, published,
+                pageCount, category, language, errors, initial, categories} = this.state;
+		if (isPatching) {
 			return (
 			<div>
 				<p><em>Uppfæri bók...</em></p>
@@ -68,6 +71,10 @@ class BookIDEdit extends Component {
         }
 
         if(book && !initial && !message){
+            // Skitamix því vefþjónustan skilar ekki 'categorytitle', bætum því við í book (responsið)
+            categories.map((cat) => {
+               if(cat.id === book.category) book.categorytitle = cat.title;
+            })
             const newTo = { 
                 pathname:`/books/${id}`, 
                 book: book
@@ -79,7 +86,6 @@ class BookIDEdit extends Component {
                 </div>
             );
         }
-
         return(
             <div>
                 <h1>Breyta bók</h1>
@@ -96,6 +102,13 @@ class BookIDEdit extends Component {
                     <input className={`input${errors.author}`} type="text" name="author" defaultValue={author} onChange={this.handleInputChange}/>
                     <label className={`label${errors.description}`}>Lýsing:</label> 
                     <textarea className={`input${errors.description}`} type="textarea" name="description" defaultValue={description} onChange={this.handleInputChange}/>
+                   
+                    <select name="category" defaultValue={category} onChange={this.handleInputChange}>
+                        {categories.map( (cat) =>
+                            <option key={cat.id} value={cat.id}>{cat.title}</option>
+                        )}
+                    </select>
+
                     <label className={`label${errors.isbn10}`}>ISBN10:</label> 
                     <input className={`input${errors.isbn10}`} type="text" name="isbn10" defaultValue={isbn10} onChange={this.handleInputChange}/>
                     <label className={`label${errors.isbn13}`}>ISBN13:</label> 
@@ -116,9 +129,9 @@ class BookIDEdit extends Component {
 
 const mapStateToProps = (state) => {
     return {
-          isFetching: state.patchBook.isFetching,
+          isPatching: state.patchBook.isPatching,
           book: state.patchBook.book,
-          message: state.patchBook.message
+          message: state.patchBook.message,
     }
   }
   
