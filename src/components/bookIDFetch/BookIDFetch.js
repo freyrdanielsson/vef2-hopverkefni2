@@ -15,13 +15,13 @@ import './BookIDFetch.css';
 class BookIDFetch extends Component {
 
     state = {
-        stateUrl: null,
+        stateBook: null,
     }
 
     static propTypes = {
         id: PropTypes.string,
         url: PropTypes.string,
-        updated: PropTypes.bool,
+        updatedBook: PropTypes.shape()
     }
 
     static contextTypes = {
@@ -30,24 +30,20 @@ class BookIDFetch extends Component {
 
     componentDidMount() {
         const { dispatch, id, url, } = this.props;
-        this.setState({stateUrl: url});
         dispatch(fetchBooks(`/${id}`));
     }
     
     componentDidUpdate(prevProps){
-        if(this.props.updated !== prevProps.updated){
-            const { dispatch, id, url} = this.props;
-            this.setState({stateUrl: url, updated: false});
-            dispatch(fetchBooks(`/${id}`));
-        }
         if(this.props.url !== prevProps.url){
-            const { url } = this.props;
-            this.setState({ stateUrl: url });
+            const { url, updatedBook } = this.props;
+            updatedBook && this.setState({ stateBook: updatedBook});
         }
     }
 
     render() {
-        const { isFetching, books, error, statusCode, location, id, updated } = this.props;
+        const { isFetching, books, error, statusCode, id, url } = this.props;
+        const { stateBook } = this.state;
+        const thisBook = stateBook ? stateBook : books;
         if(statusCode === 404){
             return <NotFound/>;
         }
@@ -66,8 +62,8 @@ class BookIDFetch extends Component {
 
         return (
             <section>
-                <Route path="/books/:id/edit" render={() =><BookIDEdit books={books} id={id}/>} />
-                <Route exact path="/books/:id" render={()=><BookIDView books={books} id={id}/>} />
+                <Route path="/books/:id/edit" render={() =><BookIDEdit books={thisBook} id={id}/>} />
+                <Route exact path="/books/:id" render={()=><BookIDView books={thisBook} id={id}/>} />
             </section>     
         );
     }

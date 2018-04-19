@@ -17,7 +17,7 @@ class BookIDEdit extends Component {
         isbn10: this.props.books.isbn10,
         isbn13: this.props.books.isbn13,
         published: this.props.books.published,
-        pagecount: this.props.books.pagecount,
+        pageCount: this.props.books.pagecount,
         language: this.props.books.language,
         initial: true,
         errors: {}
@@ -31,7 +31,9 @@ class BookIDEdit extends Component {
         e.preventDefault();
         const { dispatch, id, isFetching } = this.props;
         this.setState({ errors: {}, initial: false });
-        dispatch(patchBook(this.state, id));
+        const patched = (({ title, author, description, isbn10, isbn13, published, pageCount, language }) => (
+            { title, author, description, isbn10, isbn13, published, pageCount, language }))(this.state);
+        dispatch(patchBook(patched, id));
     }
     
     handleInputChange = (e) => {
@@ -46,10 +48,9 @@ class BookIDEdit extends Component {
         this.context.router.history.push(`/books/${id}`);
     }
 
-
     render() {
         const { book, isFetching, message, id } = this.props;
-        const { title, author, description, isbn10, isbn13, published, pagecount, language, errors, initial} = this.state;
+        const { title, author, description, isbn10, isbn13, published, pageCount, language, errors, initial} = this.state;
 
 		if (isFetching) {
 			return (
@@ -60,15 +61,16 @@ class BookIDEdit extends Component {
         }
 
         if(message){
+            const err = initial ? '' : 'Error';
             message.map( msg =>{
-                errors[msg.field] = 'Error';
+                errors[msg.field] = err;
             });
         }
 
-        if(book && !initial){
+        if(book && !initial && !message){
             const newTo = { 
                 pathname:`/books/${id}`, 
-                updated: true
+                book: book
             };
             return(
                 <div>
@@ -82,33 +84,31 @@ class BookIDEdit extends Component {
             <div>
                 <h1>Breyta bók</h1>
                 <ul>
-                    {message && message.map( msg =>
+                    {!initial && message && message.map( msg =>
                         <li key={msg.field}>{msg.message}</li>
                     )}
                 </ul>
                     
- 
                 <form onSubmit={this.handleSubmit}>
-                            <label className={`label${errors.title}`}>Titill:</label> 
-                            <input className={`input${errors.title}`} type="text" name="title" defaultValue={title} onChange={this.handleInputChange}/>
-                            <label className={`label${errors.author}`}>Höfundur:</label> 
-                            <input className={`input${errors.author}`} type="text" name="author" defaultValue={author} onChange={this.handleInputChange}/>
-                            <label className={`label${errors.description}`}>Lýsing:</label> 
-                            <textarea className={`input${errors.description}`} type="textarea" name="description" defaultValue={description} onChange={this.handleInputChange}/>
-                            <label className={`label${errors.isbn10}`}>ISBN10:</label> 
-                            <input className={`input${errors.isbn10}`} type="text" name="isbn10" defaultValue={isbn10} onChange={this.handleInputChange}/>
-                            <label className={`label${errors.isbn13}`}>ISBN13:</label> 
-                            <input className={`input${errors.isbn13}`} type="text" name="isbn13" defaultValue={isbn13} onChange={this.handleInputChange}/>
-                            <label className={`label${errors.published}`}>Útgefin:</label> 
-                            <input className={`input${errors.published}`} type="text" name="published" defaultValue={published} onChange={this.handleInputChange}/>
-                            <label className={`label${errors.pagecount}`}>Fjöldi síða:</label> 
-                            <input className={`input${errors.pagecount}`} type="text" name="pagecount" defaultValue={pagecount} onChange={this.handleInputChange}/>
-                            <label className={`label${errors.language}`}>Tungumál:</label> 
-                            <input className={`input${errors.language}`} type="text" name="language" defaultValue={language} onChange={this.handleInputChange}/>
-                        <Button>Vista</Button>
-
+                    <label className={`label${errors.title}`}>Titill:</label> 
+                    <input className={`input${errors.title}`} type="text" name="title" defaultValue={title} onChange={this.handleInputChange}/>
+                    <label className={`label${errors.author}`}>Höfundur:</label> 
+                    <input className={`input${errors.author}`} type="text" name="author" defaultValue={author} onChange={this.handleInputChange}/>
+                    <label className={`label${errors.description}`}>Lýsing:</label> 
+                    <textarea className={`input${errors.description}`} type="textarea" name="description" defaultValue={description} onChange={this.handleInputChange}/>
+                    <label className={`label${errors.isbn10}`}>ISBN10:</label> 
+                    <input className={`input${errors.isbn10}`} type="text" name="isbn10" defaultValue={isbn10} onChange={this.handleInputChange}/>
+                    <label className={`label${errors.isbn13}`}>ISBN13:</label> 
+                    <input className={`input${errors.isbn13}`} type="text" name="isbn13" defaultValue={isbn13} onChange={this.handleInputChange}/>
+                    <label className={`label${errors.published}`}>Útgefin:</label> 
+                    <input className={`input${errors.published}`} type="text" name="published" defaultValue={published} onChange={this.handleInputChange}/>
+                    <label className={`label${errors.pagecount}`}>Fjöldi síða:</label> 
+                    <input className={`input${errors.pagecount}`} type="text" name="pageCount" defaultValue={pageCount} onChange={this.handleInputChange}/>
+                    <label className={`label${errors.language}`}>Tungumál:</label> 
+                    <input className={`input${errors.language}`} type="text" name="language" defaultValue={language} onChange={this.handleInputChange}/>
+                    <Button>Vista</Button>
                 </form>
-                        <Button onClick={this.handleChange}>Til baka</Button>
+                    <Button onClick={this.handleChange}>Til baka</Button>
             </div>
         );
     }
