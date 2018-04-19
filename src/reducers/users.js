@@ -6,11 +6,9 @@ import {
   NOT_THE_SAME,
 } from '../actions/users';
 
-const user = JSON.parse(window.localStorage.getItem('user') || 'null');
-
 const initialState = {
   isFetching: null,
-  user,
+  user: null,
   items: '',
 };
 
