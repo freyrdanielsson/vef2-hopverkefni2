@@ -32,7 +32,8 @@ export default (state = initialState, action) => {
         ...state,
         isFetching: action.isFetching,
         isAuthenticated: action.isAuthenticated,
-        message: action.message
+        message: action.message,
+        user: action.user
       };
     case LOGIN_LOGOUT:
       return {

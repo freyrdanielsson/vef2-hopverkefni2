@@ -16,7 +16,7 @@ class Home extends Component {
           <Link to="/books/new"> skráð bækur</Link>. {/* VANTAR VIRKNI OG BREYTA LINK */}
           og breytt
           <Link to="/books"> þeim sem til eru</Link>.
-          einnig getur þú
+          Einnig getur þú
           <Link to="/users"> skoðað aðra notendur</Link>.
         </p>
         : <p>Til að njóta bókasafnsins til fullnustu mælum við með að
