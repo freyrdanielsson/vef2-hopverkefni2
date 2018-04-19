@@ -4,7 +4,7 @@ import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router';
 
-import { fetch } from '../../actions/me';
+import { fetch } from '../../actions/users';
 import Button from '../button';
 import UserPage from '../userPage';
 import NotFound from '../../routes/not-found';
@@ -76,7 +76,7 @@ class UsersList extends Component {
         this.setState({id: id});
     }
 
-    handleChange = async (pageNr) => {
+    handleBookChange = async (pageNr) => {
         window.history.pushState(null, '', `/users?id=${this.state.id}&page=${pageNr}`);
         const { dispatch } = this.props;
         const validUrl = `?offset=${(pageNr-1)*10}`;
@@ -85,12 +85,19 @@ class UsersList extends Component {
         this.setState({page: pageNr});
     }
 
+    handleUsersChange = async (pageNr) => {
+        window.history.pushState(null, '', `/users?page=${pageNr}`);
+        const { dispatch } = this.props;
+        const validUrl = `?offset=${(pageNr-1)*10}`;
+        dispatch(fetch(`/users`, validUrl, this.props.className))
+    }
+
     render() {
         const { items, isFetching, className, user } = this.props;
         
         const page = this.state.page;
         
-        const bookCount = items ? items.length : 0;
+        const userCount = items ? items.length : 0;
 
 
          if (isFetching === className) {
@@ -104,7 +111,7 @@ class UsersList extends Component {
         if(this.state.id > 0) {
             return (
                 <div>
-                    <UserPage user={user} items={items} page={this.state.page} onClick={this.handleChange}/>
+                    <UserPage user={user} items={items} page={this.state.page} onClick={this.handleBookChange}/>
                 </div>
             );
         }
@@ -121,6 +128,13 @@ class UsersList extends Component {
                     )
                     }))}
                 </ul>
+                {userCount > 0 && (
+                <div>
+                    {page > 1 && <Button onClick={() => this.handleUsersChange(page - 1)}>Fyrri Síða</Button>}
+                    <p>{`Síða ${page}`}</p>
+                    {userCount >= 10 && <Button onClick={() => this.handleUsersChange(page + 1)}>Næsta Síða</Button>}
+                </div>
+                )}
             </div>
         );
     }
@@ -129,9 +143,9 @@ class UsersList extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        isFetching: state.me.isFetching,
-        items: state.me.items,
-        user: state.me.user,
+        isFetching: state.users.isFetching,
+        items: state.users.items,
+        user: state.users.user,
     }
   }
   

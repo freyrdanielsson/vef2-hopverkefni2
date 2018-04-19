@@ -4,7 +4,6 @@ import auth from './auth'
 import register from './register'
 import books from './books'
 import profile from './profile'
-import me from './me'
 import patchBook from './patchBook'
 import users from './users'
 
@@ -13,7 +12,6 @@ export default combineReducers({
   register,
   books,
   profile,
-  me,
   patchBook,
   users
 })
