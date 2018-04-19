@@ -4,20 +4,20 @@ import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router';
 
-import { fetch, deleteBook } from '../../actions/me';
+import { fetch } from '../../actions/me';
 import Button from '../button';
 import NotFound from '../../routes/not-found';
 // import NotFound from '../../routes/not-found';
 
-import './ReadBooks.css';
+import './UsersList.css';
 
 // Sér til þess að síða refreshi þegar smellt er a back
 window.onpopstate = function(event) {
     window.location.reload();
   };
 
-class ReadBooks extends Component {
-    state = { page: 1 }
+class UsersList extends Component {
+    state = { page: 0, id: 0}
 
     // skilar -1 ef page er invalid annars page
     getPage(page) {
@@ -47,35 +47,42 @@ class ReadBooks extends Component {
     componentDidMount() {
         const params = this.getUrlParams();
         const { dispatch } = this.props;
-        this.setState({page: params.page});
-        const validUrl = params.page <= 0 ? '' : `?offset=${(params.page-1)*10}`;
-        dispatch(fetch('/users/me/read', validUrl, this.props.className));
-    }
 
-    handleDelete = async (id) => {
-        const page = this.state.page;
-        const { dispatch } = this.props;
-        const validUrl = `?offset=${(page-1)*10}`;
-		dispatch(deleteBook(id, this.props.className, validUrl));
+        const validUrl = params.page <= 0
+            ? params.id <= 0 
+                ? `?offset=${(params.page-1)*10}`
+                : `/${params.id}/read?offset=${(params.page-1)*10}`
+            : params.id <= 0
+                ? ''
+                : `/${params.id}/read`;
+        
+        if(params.id) {
+            dispatch(fetch('/users', `/${params.id}`))
+        }
+        dispatch(fetch('/users', validUrl, this.props.className));
+        this.setState({page: params.page, id: params.id});
     }
     
-    handleChange = async (pageNr) => {
-        window.history.pushState(null, '', `/profile?page=${pageNr}`);
-        
+    changeId = async (id) => {
         const { dispatch } = this.props;
-        const validUrl = `?offset=${(pageNr-1)*10}`;
-        dispatch(fetch('/users/me/read', validUrl, this.props.className));
+        const validUrl = `/${id}/read`;
+        
+        dispatch(fetch('/users', `/${id}`))
+        dispatch(fetch('/users', validUrl, this.props.className));
 
-        this.setState({page: pageNr});
+        this.setState({id: id});
     }
 
     render() {
-        const { items, isFetching, className } = this.props;
+        const { items, isFetching, className, user } = this.props;
+        console.log(this.state);
+        
         
         const page = this.state.page;
         const bookCount = items ? items.length : 0;
 
-        if (isFetching === className) {
+
+       /*  if (isFetching === className) {
 			return (
 			<div>
 				<p><em>Hleð bækur...</em></p>
@@ -90,34 +97,33 @@ class ReadBooks extends Component {
                     <Button onClick={() => this.handleChange(1)}>Fyrsta síða</Button>
                 </div>
             )
-        }
+        } */
         
+        if(this.state.id > 0) {
+            return (
+                <div>
+                    <p>
+                        {user.username}
+                    </p>
+                    <p>
+                        {user.image}
+                    </p> 
+                </div>
+            );
+        }
+
         return (
             <div>
                 <ul>
                     {items && (
-                        items.map((book) => {
+                        items.map((user) => {
                     return (
-                    <li key={book.id}>
-                            <Link to={`/books/${book.book_id}`}>{book.title}</Link>
-                            <div>
-                                <p>{book.rating && (`Einkun: ${book.rating}`)}</p>
-                            </div>
-                            <div>
-                                <p>{book.review && (`Um bók: ${book.review}`)}</p>
-                            </div>
-                            <Button className="delete" onClick={() => this.handleDelete(book.id, page)}>Eyða</Button>
+                    <li key={user.id}>
+                        <Link to={`?id=${user.id}`} onClick={() => this.changeId(user.id) }>{user.username}</Link>
                     </li>
                     )
                     }))}
                 </ul>
-                {bookCount > 0 && (
-                <div>
-                    {page > 1 && <Button onClick={() => this.handleChange(page - 1)}>Fyrri Síða</Button>}
-                    <p>{`Síða ${page}`}</p>
-                    {bookCount >= 10 && <Button onClick={() => this.handleChange(page + 1)}>Næsta Síða</Button>}
-                </div>
-            )}
             </div>
         );
     }
@@ -128,7 +134,8 @@ const mapStateToProps = (state) => {
     return {
         isFetching: state.me.isFetching,
         items: state.me.items,
+        user: state.me.user,
     }
   }
   
-  export default connect(mapStateToProps)(ReadBooks);
+  export default connect(mapStateToProps)(UsersList);

@@ -15,15 +15,15 @@ class LoginHeader extends Component {
 	}
 
   render() {
-		const { user, profilePic } = this.props;
+		const { user } = this.props;
 
 		if(user) {
-			const profile = profilePic ? profilePic : '/profile.jpg';
+			const profile = user.image ? user.image : '/profile.jpg';
 
 			return (
 				<div className="user">
 					<div className="user profile">
-						<img className="user profile img" src={profilePic} alt={user.usename}/>
+						<img className="user profile img" src={profile} alt={user.usename}/>
 					</div>
 					<div className="user info">
 						<Link to="/profile">{user.username}</Link>
@@ -43,7 +43,6 @@ class LoginHeader extends Component {
 const mapStateToProps = (state) => {
   return {
 		user: state.auth.user,
-		profilePic: state.me.profilePic,
   }
 }
 

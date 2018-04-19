@@ -26,8 +26,7 @@ class MeUrl extends Component {
 
 		let formData = new FormData();
 		formData.append('profile', profile);
-		console.log(this.props.className);
-		
+	
 		dispatch(uploadProfile(formData, this.props.className));
 	}
 
