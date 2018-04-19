@@ -15,12 +15,13 @@ import './BookIDFetch.css';
 class BookIDFetch extends Component {
 
     state = {
-        stateUrl: null
+        stateUrl: null,
     }
 
     static propTypes = {
         id: PropTypes.string,
-        url: PropTypes.string
+        url: PropTypes.string,
+        updated: PropTypes.bool,
     }
 
     static contextTypes = {
@@ -28,20 +29,25 @@ class BookIDFetch extends Component {
     }
 
     componentDidMount() {
-        const { dispatch, id, url} = this.props;
+        const { dispatch, id, url, } = this.props;
         this.setState({stateUrl: url});
         dispatch(fetchBooks(`/${id}`));
     }
     
     componentDidUpdate(prevProps){
+        if(this.props.updated !== prevProps.updated){
+            const { dispatch, id, url} = this.props;
+            this.setState({stateUrl: url, updated: false});
+            dispatch(fetchBooks(`/${id}`));
+        }
         if(this.props.url !== prevProps.url){
             const { url } = this.props;
-            this.setState({ stateUrl: url })
+            this.setState({ stateUrl: url });
         }
     }
 
     render() {
-        const { isFetching, books, error, statusCode, location, id } = this.props;
+        const { isFetching, books, error, statusCode, location, id, updated } = this.props;
         if(statusCode === 404){
             return <NotFound/>;
         }
