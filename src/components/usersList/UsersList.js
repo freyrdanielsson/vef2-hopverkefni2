@@ -70,10 +70,10 @@ class UsersList extends Component {
         const { dispatch } = this.props;
         const validUrl = `/${id}/read`;
 
-        dispatch(fetch('/users', validUrl, this.props.className));
         dispatch(fetch('/users', `/${id}`))
+        dispatch(fetch('/users', validUrl, this.props.className));
 
-        this.setState({id: id});
+        this.setState({page: 1, id: id});
     }
 
     handleBookChange = async (pageNr) => {
@@ -110,7 +110,7 @@ class UsersList extends Component {
 			);
         }
         
-        if(this.state.id > 0) {
+        if(this.state.id > 0 && user) {
             return (
                 <div>
                     <UserPage user={user} items={items} page={this.state.page} onClick={this.handleBookChange}/>
@@ -128,7 +128,9 @@ class UsersList extends Component {
                     <li key={user.id}>
                         <div className="users user--item">
                             <Link to={`?id=${user.id}`} onClick={() => this.changeId(user.id) }>{user.username}</Link>
-                            <img className="user profile img" src={profile} alt={user.username}/>
+                            <Link to={`?id=${user.id}`} onClick={() => this.changeId(user.id) }>
+                                <img className="user profile img" src={profile} alt={user.username}/>
+                            </Link>     
                         </div>
                         <div className="list_seperator"></div>
                     </li>
