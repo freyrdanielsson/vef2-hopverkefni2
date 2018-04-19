@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { Redirect } from 'react-router';
 import { fetchBooks } from '../../actions/books';
+import { fetchCategories } from '../../actions/categories';
 import Button from '../button';
 import NotFound from '../../routes/not-found';
 import PropTypes from 'prop-types';
@@ -31,6 +32,7 @@ class BookIDFetch extends Component {
     componentDidMount() {
         const { dispatch, id, url, } = this.props;
         dispatch(fetchBooks(`/${id}`));
+        dispatch(fetchCategories());
     }
     
     componentDidUpdate(prevProps){
@@ -41,28 +43,29 @@ class BookIDFetch extends Component {
     }
 
     render() {
-        const { isFetching, books, error, statusCode, id, url } = this.props;
+        const { isFetching, books, error, statusCode, id, url, fetchingCategories, 
+                categoryError, categorieStatusCode, categories } = this.props;
         const { stateBook } = this.state;
         const thisBook = stateBook ? stateBook : books;
+
         if(statusCode === 404){
             return <NotFound/>;
         }
 
-        if(error || statusCode >= 400) {
+        if(error || statusCode >= 400 || categoryError || categorieStatusCode >= 400) {
             return (
                 <p>Villa við að sækja gögn</p>  
             );
         }
     
-        if (isFetching || books.length === 0) {
+        if (isFetching || books.length === 0 || fetchingCategories || categories.length === 0) {
           return (
             <p>Sæki bók..</p>
           );
         }
-
         return (
             <section>
-                <Route path="/books/:id/edit" render={() =><BookIDEdit books={thisBook} id={id}/>} />
+                <Route path="/books/:id/edit" render={() =><BookIDEdit books={thisBook} id={id} categories={categories.items}/>} />
                 <Route exact path="/books/:id" render={()=><BookIDView books={thisBook} id={id}/>} />
             </section>     
         );
@@ -75,6 +78,10 @@ const mapStateToProps = (state) => {
       books: state.books.books,
       error: state.books.error,
       statusCode: state.books.statusCode,
+      fetchingCategories: state.categories.fetchingCategories,
+      categoryError: state.categories.categoryError,
+      categories: state.categories.categories,
+      categorieStatusCode: state.categories.statusCode
     }
   }
   

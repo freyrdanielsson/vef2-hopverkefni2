@@ -5,7 +5,7 @@ import {
   } from '../actions/patchBook';
 
 const initialState = {
-    isFetching: false,
+    isPatching: false,
     book: null
 };
 
@@ -14,19 +14,19 @@ export default (state = initialState, action) => {
       case UPDATE_BOOK_REQUEST:    
         return {
           ...state,
-          isFetching: action.isFetching,
+          isPatching: action.isPatching,
         };
       case UPDATE_BOOK_SUCCESS:
         return {
           ...state,
-          isFetching: action.isFetching,
+          isPatching: action.isPatching,
           book: action.book,
           message: action.message,
         };
       case UPDATE_BOOK_FAILURE:
         return {
           ...state,
-          isFetching: action.isFetching,
+          isPatching: action.isPatching,
           message: action.message
         };
       default:

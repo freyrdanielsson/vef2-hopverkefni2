@@ -11,6 +11,8 @@ import NotFound from '../../routes/not-found';
 import './BooksView.css';
 
 class BooksView extends Component {
+
+    state = { page: 1}
     /**
      * Fall sem fær inn gildi og athugar hvort það sé valid
      * fyrir 'page' parametran í Url-inu
@@ -52,12 +54,23 @@ class BooksView extends Component {
     componentDidMount() {
         const { dispatch } = this.props;
         const params = this.getUrlParams();
+        this.setState({ page: params.page });
         const validUrl = params.page <= 0 ? '' : `?search=${params.query}&offset=${(params.page-1)*10}&limit=10`;
         dispatch(fetchBooks(validUrl));
     } 
 
+    handleChange = async (searchQuery, pageNr) => {
+        window.history.pushState(null, '', `/books?query=${searchQuery}&page=${pageNr}`);
+        const { dispatch } = this.props;
+        this.setState({page: pageNr});
+        const validUrl = pageNr <= 0 ? '' : `?search=${searchQuery}&offset=${(pageNr-1)*10}&limit=10`;
+        dispatch(fetchBooks(validUrl));
+
+    }
+
     render() {
         const { isFetching, books, error, statusCode, location } = this.props;
+        const { page } = this.state;
         if(error || statusCode >= 400) {
             return (
                 <p>Villa við að sækja gögn</p>  
@@ -73,7 +86,7 @@ class BooksView extends Component {
         const params = this.getUrlParams();
         const bookCount = books.items ? books.items.length : 0;
         
-        if(params.page <= 0 || bookCount <= 0){
+        if(page <= 0 || bookCount <= 0){
             return <NotFound/>;
         }
 
@@ -96,13 +109,9 @@ class BooksView extends Component {
             </ul>
             {bookCount > 0 && (
                 <div>
-                    <form action={`${window.location.origin}/books?query=&page=`}>
-                        <input type="hidden" name="query" value={`${params.query}`} />
-                        {params.page > 1 && <button name="page" type="submit" value={`${params.page - 1}`}>Fyrri Síða</button>}
-                        <p>{`Síða ${params.page}`}</p>
-                        {bookCount >= 10 && <button name="page" type="submit" value={`${params.page + 1}`}>Næsta Síða</button>}
-                    </form>
-                   
+                    {page > 1 && <Button onClick={() => this.handleChange(params.query, page - 1)}>Fyrri Síða</Button>}
+                    <p>{`Síða ${page}`}</p>
+                    {bookCount >= 10 && <Button onClick={() => this.handleChange(params.query, page + 1)}>Næsta Síða</Button>}
                 </div>
             )}
           </section>
