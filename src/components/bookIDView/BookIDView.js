@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Button from '../button';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import GiveReview from '../giveReview';
 
 
 import './BookIDView.css';
@@ -10,6 +11,12 @@ export default class BookIDView extends Component {
 
     static contextTypes = {
         router: PropTypes.object
+    }
+
+    
+    static propTypes = {
+        id: PropTypes.string,
+        books: PropTypes.shape()
     }
     
     render() {
@@ -26,7 +33,7 @@ export default class BookIDView extends Component {
                 <p>{books.published && (`Gefin út ${books.published}`)}</p>
                 <p>{books.language && (`Tungumál: ${books.language}`)}</p>
                 <Link to={`/books/${id}/edit`}>Breyta bók</Link>
-                <Button>Lesin bók</Button>
+                <GiveReview id={id}/>
                 <Button onClick={this.context.router.history.goBack}>Til baka</Button>
             </div>
         );
