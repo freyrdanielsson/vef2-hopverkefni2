@@ -10,6 +10,7 @@ import users from './users'
 import post from './post'
 
 import categories from './categories'
+import readBook from './readBook'
 
 
 export default combineReducers({
@@ -19,9 +20,7 @@ export default combineReducers({
   profile,
   patchBook,
   users,
-
+  readBook,
   post,
-
   categories
-
 })
