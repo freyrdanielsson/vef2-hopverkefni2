@@ -11,20 +11,7 @@ export default class BookIDView extends Component {
     static contextTypes = {
         router: PropTypes.object
     }
-    /*
-    static propTypes = {
-        books: PropTypes.shape({
-            title: PropTypes.string.isRequired,
-            author: PropTypes.string,
-            isbn13: PropTypes.string.isRequired,
-            categorytitle: PropTypes.string.isRequired,
-            description: PropTypes.string.isRequired,
-            pagecount: PropTypes.string,
-            published: PropTypes.string,
-            language: PropTypes.string
-        })
-      }
-      */
+    
     render() {
         const { books, id } = this.props;
 
