@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Button from '../button';
-import { Link } from 'react-router-dom';
-import { post } from '../../actions/post';
+import { Link, Redirect } from 'react-router-dom';
+import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
+
+import { post } from '../../actions/post';
+import { fetchCategories } from '../../actions/categories';
+
 
 
 import './NewBook.css';
@@ -19,13 +23,18 @@ class NewBook extends Component {
         published: '',
         pageCount: '',
         language: '',
+        category: 0,
         errors: {}
-    } 
+    }
+
+    componentDidMount() {
+        const { dispatch } = this.props;
+        dispatch(fetchCategories());
+    }
 
 	handleSubmit = async (e) => {
         e.preventDefault();
         const { dispatch } = this.props;
-
         dispatch(post('/books', this.state));
     }
     
@@ -34,15 +43,15 @@ class NewBook extends Component {
 		this.setState({ [name]: value });
     }
 
-    handleChange = async () => {
+    handleBack = async () => {
         window.history.back();
     }
 
     render() {
-        const { result, isFetching, message } = this.props;
-        const { title, author, description, isbn10, isbn13, published, pageCount, language, errors, initial } = this.state;
+        const { result, isFetching, message, categories } = this.props;
+        const { title, author, description, isbn10, isbn13, published, pageCount, language, errors, category} = this.state;
 
-		if (isFetching) {
+		if(isFetching) {
 			return (
 			<div>
 				<p><em>Bæti við...</em></p>
@@ -51,17 +60,21 @@ class NewBook extends Component {
         }
 
         if(message){
-            const err = initial ? '' : 'Error';
             message.map( msg =>{
-                errors[msg.field] = err;
+                errors[msg.field] = 'Error';
             });
+        }
+
+        if(result) {
+            return(<Redirect to={`${result.id}`} />)
         }
 
         return(
             <div>
-                <h1>Breyta bók</h1>
+                <Helmet title="Ný bók"/>
+                <h1>Ný bók</h1>
                 <ul>
-                    {!initial && message && message.map( msg =>
+                    {message && message.map( msg =>
                         <li key={msg.field}>{msg.message}</li>
                     )}
                 </ul>
@@ -78,6 +91,14 @@ class NewBook extends Component {
                 <div>
                     <label className={`label${errors.description}`}>Lýsing:</label> 
                     <textarea className={`input${errors.description}`} type="textarea" name="description" value={description} onChange={this.handleInputChange}/>
+                </div>
+                <div>
+                    <select name="category" value="test" onChange={this.handleInputChange}>
+                    <option value={0}>Veldu flokk:</option>
+                        {categories.items && categories.items.map( (cat) =>
+                            <option key={cat.id} value={cat.id}>{cat.title}</option>
+                        )}
+                    </select>
                 </div>
                 <div>
                     <label className={`label${errors.isbn10}`}>ISBN10:</label> 
@@ -101,7 +122,7 @@ class NewBook extends Component {
                 </div>
                     <Button>Bæta við</Button>
                 </form>
-                    <Button onClick={this.handleChange}>Til baka</Button>
+                    <Button onClick={this.handleBack}>Til baka</Button>
             </div>
         );
     }
@@ -111,7 +132,8 @@ const mapStateToProps = (state) => {
     return {
           isFetching: state.post.isFetching,
           result: state.post.result,
-          message: state.post.message
+          message: state.post.message,
+          categories: state.categories.categories,
     }
   }
   

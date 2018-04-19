@@ -12,17 +12,17 @@ class Home extends Component {
       <h1>Velkomin á bókasafnið</h1>
       <div>
         {authenticated 
-        ? <p>Þú ert skráður notandi og getur því
-          <Link to="/books/new"> skráð bækur</Link>. {/* VANTAR VIRKNI OG BREYTA LINK */}
-          og breytt
-          <Link to="/books"> þeim sem til eru</Link>.
-          Einnig getur þú
-          <Link to="/users"> skoðað aðra notendur</Link>.
+        ? <p>Þú ert skráður notandi og getur því &nbsp;
+          <Link to="/books/new">skráð bækur</Link> &nbsp;
+          og breytt &nbsp;
+          <Link to="/books">þeim sem til eru</Link>.&nbsp;
+           Einnig getur þú &nbsp;
+          <Link to="/users">skoðað aðra notendur</Link>.&nbsp;
         </p>
-        : <p>Til að njóta bókasafnsins til fullnustu mælum við með að
-          <Link to="/login"> skrá sig inn</Link>.
-          Þangað til getur þú skoðað
-          <Link to="/books"> allar bækur</Link>.
+        : <p>Til að njóta bókasafnsins til fullnustu mælum við með að &nbsp;
+          <Link to="/login">skrá sig inn</Link>. &nbsp;
+          Þangað til getur þú skoðað &nbsp;
+          <Link to="/books">allar bækur</Link>.
           </p>}
       </div>
       </section>

@@ -47,7 +47,6 @@ class ReadBooks extends Component {
     componentDidMount() {
         const params = this.getUrlParams();
         const { dispatch } = this.props;
-        console.log(params);
         
         this.setState({page: params.page});
         const validUrl = params.page <= 0 ? '' : `?offset=${(params.page-1)*10}`;
