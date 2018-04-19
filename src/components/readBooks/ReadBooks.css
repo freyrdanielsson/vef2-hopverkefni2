@@ -1,0 +1,17 @@
+.read {
+
+}
+
+.read--header {
+	font-size: 2em;
+}
+
+.read--list {
+	list-style: none;
+}
+
+.list_seperator {
+	border-bottom: solid 1px rgb(134, 134, 134);
+	max-width: 40%;
+	margin: 20px 0;
+}
