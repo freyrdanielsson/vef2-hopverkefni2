@@ -34,6 +34,7 @@ export const loginError = (message) => {
     type: LOGIN_FAILURE,
     isFetching: false,
     isAuthenticated: false,
+    user: null,
     message
   }
 }
