@@ -95,12 +95,13 @@ class ReadBooks extends Component {
         }
         
         return (
-            <div>
-                <ul>
+            <section className="read">
+                <h2 className="read read--header">Lesnar bækur</h2>
+                <ul className="read read--list">
                     {items && (
                         items.map((book) => {
                     return (
-                    <li key={book.id}>
+                    <li className="read read--item" key={book.id}>
                             <Link to={`/books/${book.book_id}`}>{book.title}</Link>
                             <div>
                                 <p>{book.rating && (`Einkun: ${book.rating}`)}</p>
@@ -109,6 +110,7 @@ class ReadBooks extends Component {
                                 <p>{book.review && (`Um bók: ${book.review}`)}</p>
                             </div>
                             <Button className="delete" onClick={() => this.handleDelete(book.id, page)}>Eyða</Button>
+                            <div className="list_seperator"></div>
                     </li>
                     )
                     }))}
@@ -120,7 +122,7 @@ class ReadBooks extends Component {
                     {bookCount >= 10 && <Button onClick={() => this.handleChange(page + 1)}>Næsta Síða</Button>}
                 </div>
                 )}
-            </div>
+            </section>
         );
     }
 

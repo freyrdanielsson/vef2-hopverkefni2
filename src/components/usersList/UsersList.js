@@ -90,6 +90,8 @@ class UsersList extends Component {
         const { dispatch } = this.props;
         const validUrl = `?offset=${(pageNr-1)*10}`;
         dispatch(fetch(`/users`, validUrl, this.props.className))
+
+        this.setState({page: pageNr});
     }
 
     render() {
@@ -117,13 +119,18 @@ class UsersList extends Component {
         }
 
         return (
-            <div>
-                <ul>
+            <div className="users">
+                <ul className="users users--list">
                     {items && (
                         items.map((user) => {
+                    const profile = user.image ? user.image : '/profile.jpg';
                     return (
                     <li key={user.id}>
-                        <Link to={`?id=${user.id}`} onClick={() => this.changeId(user.id) }>{user.username}</Link>
+                        <div className="users user--item">
+                            <Link to={`?id=${user.id}`} onClick={() => this.changeId(user.id) }>{user.username}</Link>
+                            <img className="user profile img" src={profile} alt={user.username}/>
+                        </div>
+                        <div className="list_seperator"></div>
                     </li>
                     )
                     }))}
