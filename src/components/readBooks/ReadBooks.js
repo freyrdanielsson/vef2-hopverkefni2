@@ -47,6 +47,8 @@ class ReadBooks extends Component {
     componentDidMount() {
         const params = this.getUrlParams();
         const { dispatch } = this.props;
+        console.log(params);
+        
         this.setState({page: params.page});
         const validUrl = params.page <= 0 ? '' : `?offset=${(params.page-1)*10}`;
         dispatch(fetch('/users/me/read', validUrl, this.props.className));
@@ -117,7 +119,7 @@ class ReadBooks extends Component {
                     <p>{`Síða ${page}`}</p>
                     {bookCount >= 10 && <Button onClick={() => this.handleChange(page + 1)}>Næsta Síða</Button>}
                 </div>
-            )}
+                )}
             </div>
         );
     }

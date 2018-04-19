@@ -6,8 +6,8 @@ import { Redirect } from 'react-router';
 
 import { fetch } from '../../actions/me';
 import Button from '../button';
+import UserPage from '../userPage';
 import NotFound from '../../routes/not-found';
-// import NotFound from '../../routes/not-found';
 
 import './UsersList.css';
 
@@ -17,7 +17,7 @@ window.onpopstate = function(event) {
   };
 
 class UsersList extends Component {
-    state = { page: 0, id: 0}
+    state = { page: 1, id: 0}
 
     // skilar -1 ef page er invalid annars page
     getPage(page) {
@@ -47,67 +47,64 @@ class UsersList extends Component {
     componentDidMount() {
         const params = this.getUrlParams();
         const { dispatch } = this.props;
-
-        const validUrl = params.page <= 0
-            ? params.id <= 0 
-                ? `?offset=${(params.page-1)*10}`
-                : `/${params.id}/read?offset=${(params.page-1)*10}`
-            : params.id <= 0
-                ? ''
-                : `/${params.id}/read`;
+        
+        // passa að sækja eftir réttu urli í refresh
+        const validUrl = params.page > 0
+            ? params.id > 0 
+                ? `/${params.id}/read?offset=${(params.page-1)*10}`
+                : `?offset=${(params.page-1)*10}`
+            : params.id > 0
+                ? `/${params.id}/read`
+                : '';
+        
+        dispatch(fetch('/users', validUrl, this.props.className));
         
         if(params.id) {
             dispatch(fetch('/users', `/${params.id}`))
         }
-        dispatch(fetch('/users', validUrl, this.props.className));
+        
         this.setState({page: params.page, id: params.id});
     }
     
     changeId = async (id) => {
         const { dispatch } = this.props;
         const validUrl = `/${id}/read`;
-        
-        dispatch(fetch('/users', `/${id}`))
+
         dispatch(fetch('/users', validUrl, this.props.className));
+        dispatch(fetch('/users', `/${id}`))
 
         this.setState({id: id});
     }
 
+    handleChange = async (pageNr) => {
+        window.history.pushState(null, '', `/users?id=${this.state.id}&page=${pageNr}`);
+        const { dispatch } = this.props;
+        const validUrl = `?offset=${(pageNr-1)*10}`;
+        dispatch(fetch(`/users/${this.state.id}/read`, validUrl, this.props.className));
+
+        this.setState({page: pageNr});
+    }
+
     render() {
         const { items, isFetching, className, user } = this.props;
-        console.log(this.state);
-        
         
         const page = this.state.page;
+        
         const bookCount = items ? items.length : 0;
 
 
-       /*  if (isFetching === className) {
+         if (isFetching === className) {
 			return (
 			<div>
-				<p><em>Hleð bækur...</em></p>
+				<p><em>Sæki notendur...</em></p>
 			</div>
 			);
         }
         
-        if(page <= 0 || bookCount <= 0){
-            return (
-                <div>
-                    <p>Oops, ekki fleiri bækur</p>
-                    <Button onClick={() => this.handleChange(1)}>Fyrsta síða</Button>
-                </div>
-            )
-        } */
-        
         if(this.state.id > 0) {
             return (
                 <div>
-                    <p>
-                        {user.username}
-                    </p>
-                    <p>
-                        {user.image}
-                    </p> 
+                    <UserPage user={user} items={items} page={this.state.page} onClick={this.handleChange}/>
                 </div>
             );
         }

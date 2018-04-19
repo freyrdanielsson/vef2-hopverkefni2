@@ -120,7 +120,7 @@ export const fetch = (baseUrl, url, className) => {
       if(items){
         return dispatch(receiveItems(items));
       }
-      return dispatch(receiveItems(response.result));
+      return dispatch(receiveUpload(response.result));
     }
   }
 }
