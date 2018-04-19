@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Helmet from 'react-helmet';
+import { Link } from 'react-router-dom'
 
 import RegisterForm from '../../components/registerForm';
 
@@ -11,8 +12,10 @@ class Register extends Component {
 
     return (
       <div>
-        <Helmet defaultTitle="Login" />
+        <Helmet defaultTitle="Nýskráning" />
         <RegisterForm/>
+
+        <Link to='/login'>Innskráning</Link>
       </div>
     );
   }

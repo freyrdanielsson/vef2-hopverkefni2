@@ -48,17 +48,15 @@ class MeForm extends Component {
 		}
 
 		return (
-			<div>
+			<div className="form">
 			
 				<form className={className} onSubmit={this.handleSubmit}>
-					<div>
-						{label.map((info, i) => (
-						<div key={i}>
-							<label htmlFor={info.field}>{`${info.label}: `}</label>
-							<input type={type} name={info.field} value={this.state[info.field]} onChange={this.handleInputChange} />
-						</div>
-						))}
+					{label.map((info, i) => (
+					<div className="form form--container" key={i}>
+						<label htmlFor={info.field}>{`${info.label}: `}</label>
+						<input className={`form__input ${className}`} type={type} name={info.field} value={this.state[info.field]} onChange={this.handleInputChange} />
 					</div>
+					))}
 					<Button>{buttonText}</Button>
 
 				</form>

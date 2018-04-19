@@ -3,3 +3,8 @@
   max-width: 1200px;
   margin: 0 auto;
 }
+
+.form {
+  display: flex;
+	margin: 20px 0;
+}

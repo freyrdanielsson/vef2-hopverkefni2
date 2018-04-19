@@ -52,24 +52,27 @@ class LoginForm extends Component {
 
 		return (
 			<div>
+			<h1>Innskráning</h1>
+
 				{message && (
 					<p>{message}</p>
 				)}
+				<div className="form">
+					<form method="POST" onSubmit={this.handleSubmit}>
 
-				<form onSubmit={this.handleSubmit}>
+						<div className="form form--container">
+							<label htmlFor="username">Notendanafn:</label>
+							<input className="form__input" id="username" type="text" name="username" value={username} onChange={this.handleInputChange} />
+						</div>
 
-					<div>
-						<label htmlFor="username">Notendanafn:</label>
-						<input id="username" type="text" name="username" value={username} onChange={this.handleInputChange} />
-					</div>
+						<div className="form form--container">
+							<label htmlFor="password">Lykilorð:</label>
+							<input className="form__input" id="password" type="password" name="password" value={password} onChange={this.handleInputChange} />
+						</div>
 
-					<div>
-						<label htmlFor="password">Lykilorð:</label>
-						<input id="password" type="password" name="password" value={password} onChange={this.handleInputChange} />
-					</div>
-
-					<Button disabled={isFetching}>Innskrá</Button>
-				</form>
+						<Button disabled={isFetching}>Innskrá</Button>
+					</form>
+				</div>
 			</div>
 		);
 	}

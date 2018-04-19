@@ -1,0 +1,14 @@
+.form--container {
+	margin-bottom: 20px;
+	justify-content: space-between;
+	align-items: baseline;
+}
+
+.form__input {
+	padding: 6px;
+	margin: 0 4em;
+	font-size: 1em;
+	border: solid 1px #aaa;
+	border-radius: 2px;
+	width: 16em;
+}

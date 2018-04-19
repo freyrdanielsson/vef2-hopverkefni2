@@ -3,4 +3,9 @@
   display: flex;
   padding: 10px;
   justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+h1.header__heading a {
+  text-decoration: none;
 }
