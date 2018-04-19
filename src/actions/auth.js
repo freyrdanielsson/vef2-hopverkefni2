@@ -19,7 +19,7 @@ function requestLogin() {
   }
 }
 
-function receiveLogin(user) {
+export const receiveLogin = (user) => {
   return {
     type: LOGIN_SUCCESS,
     isFetching: false,

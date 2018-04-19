@@ -1,9 +1,10 @@
 import api from '../api';
+import { receiveLogin } from './auth';
 
 export const UPDATE_USER_REQUEST = 'UPDATE_USER_REQUEST';
 export const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
 export const UPDATE_USER_FAILURE = 'UPDATE_USER_FAILURE';
-export const READ_BOOKS_SUCCESS = 'READ_BOOKS_SUCCESS';
+export const FETCH_SUCCESS = 'FETCH_SUCCESS';
 export const NOT_THE_SAME = 'NOT_THE_SAME';
 
 
@@ -23,11 +24,11 @@ function receiveUpload(user) {
   }
 }
 
-function receiveBooks(books) {
+function receiveItems(items) {
   return {
-    type: READ_BOOKS_SUCCESS,
+    type: FETCH_SUCCESS,
     isFetching: null,
-    books,
+    items,
     message: null,
   }
 }
@@ -67,6 +68,7 @@ export const uploadProfile = (profile, className) => {
       const user = upload.result;
       window.localStorage.setItem('user', JSON.stringify(user))
       dispatch(receiveUpload(user));
+      dispatch(receiveLogin(user));
     }
   }
 }
@@ -99,25 +101,26 @@ export const updateUser = (userInfo, theSame, className) => {
   }
 }
 
-export const fetchRead = (url, className) => {
+export const fetch = (baseUrl, url, className) => {
   return async (dispatch) => {
-    console.log(url, className);
-    
     dispatch(requestUpload(className));
-    let read;
+    let response;
     try {
-      read = await api.get(`/users/me/read${url}`);
+      response = await api.get(`${baseUrl}${url}`);
     } catch (e) {
       return dispatch(uploadError(e))
     }
 
-    if (read.result.error) {
-      dispatch(uploadError(read.result.error))
+    if (response.result.error) {
+      dispatch(uploadError(response.result.error))
     }
 
-    if (read.status === 200) {
-      const { items } = read.result;
-      dispatch(receiveBooks(items));
+    if (response.status === 200) {
+      const { items } = response.result;
+      if(items){
+        return dispatch(receiveItems(items));
+      }
+      return dispatch(receiveUpload(response.result));
     }
   }
 }
@@ -129,9 +132,9 @@ export const deleteBook = (id, className, url) => {
     } catch (e) {
       console.log(e);
       
-      return //dispatch(uploadError(e))
+      return dispatch(uploadError(e))
     }
 
-    dispatch(fetchRead(url, className));
+    dispatch(fetch(url, className));
   }
 }

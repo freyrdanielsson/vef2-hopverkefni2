@@ -6,6 +6,7 @@ import books from './books'
 import profile from './profile'
 import me from './me'
 import patchBook from './patchBook'
+import users from './users'
 
 export default combineReducers({
   auth,
@@ -13,5 +14,6 @@ export default combineReducers({
   books,
   profile,
   me,
-  patchBook
+  patchBook,
+  users
 })

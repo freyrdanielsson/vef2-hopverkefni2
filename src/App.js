@@ -10,7 +10,7 @@ import Home from './routes/home';
 import Login from './routes/login';
 import Profile from './routes/profile';
 import NotFound from './routes/not-found';
-
+import Users from './routes/users';
 import Register from './routes/register';
 import Books from './routes/books';
 import BookID from './routes/bookID';
@@ -37,6 +37,7 @@ class App extends Component {
             <UserRoute path="/login" authenticated={!isAuthenticated} redirect="/profile" component={Login} />
             <UserRoute path="/register" authenticated={!isAuthenticated} redirect="/profile" component={Register} />
             <UserRoute exact path="/profile" authenticated={isAuthenticated} redirect="/login" component={Profile} />
+            <UserRoute exact path="/users" authenticated={isAuthenticated} redirect="/login" component={Users} />
             <Route exact path="/books" component={Books} />
             <Route path="/books/:id" component={BookID} />
 
