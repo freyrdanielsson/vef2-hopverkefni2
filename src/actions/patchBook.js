@@ -7,14 +7,14 @@ export const UPDATE_BOOK_FAILURE = 'UPDATE_BOOK_FAILURE';
 function requestUpload() {
     return {
       type: UPDATE_BOOK_REQUEST,
-      isFetching: true,
+      isPatching: true,
     }
   }
   
 function receiveUpload(book) {
     return {
       type: UPDATE_BOOK_SUCCESS,
-      isFetching: false,
+      isPatching: false,
       book,
       message: null,
     }
@@ -23,7 +23,7 @@ function receiveUpload(book) {
 function uploadError(message) {
     return {
       type: UPDATE_BOOK_FAILURE,
-      isFetching: false,
+      isPatching: false,
       message
     }
 }
