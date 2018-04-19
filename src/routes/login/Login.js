@@ -12,7 +12,7 @@ class Login extends Component {
 
     return (
       <div>
-        <Helmet defaultTitle="Login" />
+        <Helmet defaultTitle="Innskráning" />
 
         <LoginForm/>
 

@@ -47,7 +47,7 @@ class MeUrl extends Component {
 		}
 
 		return (
-			<div>
+			<div className="form">
 				{message && (
 					<ul>{message.map((error, i) => (
 						<ul key={i}>

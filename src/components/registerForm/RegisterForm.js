@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 
 import { registerUser } from '../../actions/register';
+import Button from '../button'
 
 import './RegisterForm.css';
 
@@ -45,6 +46,7 @@ class RegisterForm extends Component {
 
 		return (
 			<div>
+				<h1>Nýskráning</h1>
 				{message && (
 					<ul>{message.map((error, i) => (
 						<ul key={i}>
@@ -54,26 +56,26 @@ class RegisterForm extends Component {
 						))}
 					</ul>
 				)}
+				<div className="form">
+					<form onSubmit={this.handleSubmit}>
+						<div className="form form--container">
+							<label htmlFor="name">Nafn</label>
+							<input className="form__input" id="name" type="text" name="name" value={name} onChange={this.handleInputChange} />
+						</div>
 
-				<form onSubmit={this.handleSubmit}>
+						<div className="form form--container">
+							<label htmlFor="username">Notendanafn:</label>
+							<input className="form__input" id="username" type="text" name="username" value={username} onChange={this.handleInputChange} />
+						</div>
 
-					<div>
-						<label htmlFor="name">Nafn</label>
-						<input id="name" type="text" name="name" value={name} onChange={this.handleInputChange} />
-					</div>
+						<div className="form form--container">
+							<label htmlFor="password">Lykilorð:</label>
+							<input className="form__input" id="password" type="password" name="password" value={password} onChange={this.handleInputChange} />
+						</div>
 
-					<div>
-						<label htmlFor="username">Notendanafn:</label>
-						<input id="username" type="text" name="username" value={username} onChange={this.handleInputChange} />
-					</div>
-
-					<div>
-						<label htmlFor="password">Lykilorð:</label>
-						<input id="password" type="password" name="password" value={password} onChange={this.handleInputChange} />
-					</div>
-
-					<button disabled={isFetching}>Búa til notanda</button>
-				</form>
+						<Button disabled={isFetching}>Búa til notanda</Button>
+					</form>
+				</div>
 			</div>
 		);
 	}

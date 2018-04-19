@@ -30,6 +30,8 @@ export const receiveLogin = (user) => {
 }
 
 export const loginError = (message) => {
+  window.localStorage.removeItem('token');
+  window.localStorage.removeItem('user');
   return {
     type: LOGIN_FAILURE,
     isFetching: false,
