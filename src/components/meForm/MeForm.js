@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 
-import { updateUser } from '../../actions/me';
+import { updateUser } from '../../actions/users';
 
 import Button from '../button';
 
@@ -69,7 +69,7 @@ class MeForm extends Component {
 
 const mapStateToProps = (state) => {
   return {
-		isFetching: state.me.isFetching,
+		isFetching: state.users.isFetching,
   }
 }
 

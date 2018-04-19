@@ -1,35 +1,50 @@
 import { 
-  GET_USERS_REQUEST,
-  GET_USERS_SUCCESS,
-  GET_USERS_FAILURE,
+  UPDATE_USER_REQUEST,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_FAILURE,
+  FETCH_SUCCESS,
+  NOT_THE_SAME,
 } from '../actions/users';
+
+const user = JSON.parse(window.localStorage.getItem('user') || 'null');
 
 const initialState = {
   isFetching: null,
-  profilePic: null,
-  user: null,
-  books: '',
+  user,
+  items: '',
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case GET_USERS_REQUEST:    
+    case UPDATE_USER_REQUEST:    
       return {
         ...state,
         isFetching: action.isFetching,
       };
-    case GET_USERS_SUCCESS:
+    case UPDATE_USER_SUCCESS:
       return {
         ...state,
         isFetching: action.isFetching,
         user: action.user,
         message: action.message,
       };
-    case GET_USERS_FAILURE:
+    case UPDATE_USER_FAILURE:
       return {
         ...state,
         isFetching: action.isFetching,
         message: action.message
+      };
+    case NOT_THE_SAME:
+      return {
+        ...state,
+        message: [action.message],
+      };
+      case FETCH_SUCCESS:
+      return {
+        ...state,
+        isFetching: action.isFetching,
+        items: action.items,
+        message: action.message,
       };
     default:
       return state;

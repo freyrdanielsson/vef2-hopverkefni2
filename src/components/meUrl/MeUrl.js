@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 
-import { uploadProfile } from '../../actions/me';
+import { uploadProfile } from '../../actions/users';
 
 import Button from '../button';
 
@@ -71,8 +71,8 @@ class MeUrl extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    isFetching: state.me.isFetching,
-    message: state.me.message,
+    isFetching: state.users.isFetching,
+    message: state.users.message,
   }
 }
 

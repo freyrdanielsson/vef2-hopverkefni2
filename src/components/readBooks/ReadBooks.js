@@ -4,7 +4,7 @@ import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router';
 
-import { fetch, deleteBook } from '../../actions/me';
+import { fetch, deleteBook } from '../../actions/users';
 import Button from '../button';
 import NotFound from '../../routes/not-found';
 // import NotFound from '../../routes/not-found';
@@ -128,8 +128,8 @@ class ReadBooks extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        isFetching: state.me.isFetching,
-        items: state.me.items,
+        isFetching: state.users.isFetching,
+        items: state.users.items,
     }
   }
   
