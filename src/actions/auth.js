@@ -29,7 +29,7 @@ export const receiveLogin = (user) => {
   }
 }
 
-function loginError(message) {
+export const loginError = (message) => {
   return {
     type: LOGIN_FAILURE,
     isFetching: false,
