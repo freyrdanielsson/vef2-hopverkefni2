@@ -23,10 +23,10 @@ class LoginHeader extends Component {
 			return (
 				<div className="user">
 					<div className="user profile">
-						<img className="user profile img" src={profile} alt={user.usename}/>
+						<img className="user profile img" src={profile} alt={user.username}/>
 					</div>
 					<div className="user info">
-						<Link to="/profile">{user.username}</Link>
+						<Link to="/profile">{user.name}</Link>
 						<Button onClick={this.handleLogout} className="logout">Útskrá</Button>
 					</div>
 				</div>

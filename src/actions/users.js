@@ -1,5 +1,5 @@
 import api from '../api';
-import { receiveLogin } from './auth';
+import { receiveLogin, loginError } from './auth';
 
 export const UPDATE_USER_REQUEST = 'UPDATE_USER_REQUEST';
 export const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
@@ -60,6 +60,10 @@ export const uploadProfile = (profile, className) => {
       return dispatch(uploadError(e))
     }
 
+    if (upload.status === 401) {
+      return dispatch(loginError(upload.result.error))
+    }
+
     if (upload.result.error) {
       dispatch(uploadError([{message: upload.result.error}]))
     }
@@ -89,6 +93,10 @@ export const updateUser = (userInfo, theSame, className) => {
       return dispatch(uploadError(e))
     }
 
+    if (update.status === 401) {
+      return dispatch(loginError(update.result.error))
+    }
+
     if (update.result.errors) {
       dispatch(uploadError(update.result.errors))
     }
@@ -97,6 +105,7 @@ export const updateUser = (userInfo, theSame, className) => {
       const user = update.result;
       window.localStorage.setItem('user', JSON.stringify(user))
       dispatch(receiveUpload(user));
+      dispatch(receiveLogin(user));
     }
   }
 }
@@ -110,6 +119,11 @@ export const fetch = (baseUrl, url, className) => {
     } catch (e) {
       return dispatch(uploadError(e))
     }
+
+    if (response.status === 401) {
+      return dispatch(loginError(response.result.error))
+    }
+    
 
     if (response.result.error) {
       dispatch(uploadError(response.result.error))

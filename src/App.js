@@ -32,7 +32,7 @@ class App extends Component {
 
         <div className="main__content">
           <Switch location={this.props.location}>
-            <Route path="/" exact component={Home} />
+            <Route path="/" exact render={() => <Home authenticated={isAuthenticated}/>} />
             {/* UserRoute renderar component ef authenticated=true annars redirectar hann */}
             <UserRoute path="/login" authenticated={!isAuthenticated} redirect="/profile" component={Login} />
             <UserRoute path="/register" authenticated={!isAuthenticated} redirect="/profile" component={Register} />
