@@ -59,7 +59,7 @@ class GiveReview extends Component {
 
         if(back && !visible){
             return (
-                <Button className={`show${isAuthenticated}`} onClick={this.handleChange}>Lesin bók</Button>
+                <Button className={`show${isAuthenticated}`} onClick={this.handleChange}>Skrá lestur</Button>
             );
         }
 
