@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
-
 import Button from '../button';
-import NotFound from '../../routes/not-found';
 
 import './UserPage.css';
 

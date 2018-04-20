@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
-import { Redirect } from 'react-router';
-
 import { fetch } from '../../actions/users';
 import Button from '../button';
 import UserPage from '../userPage';
-import NotFound from '../../routes/not-found';
 
 import './UsersList.css';
 
@@ -21,7 +17,7 @@ class UsersList extends Component {
 
     // skilar -1 ef page er invalid annars page
     getPage(page) {
-        return (isNaN(page) || page <= 0) ? -1 : parseInt(page);
+        return (isNaN(page) || page <= 0) ? -1 : parseInt(page , 10);
     }
 
 
