@@ -31,20 +31,22 @@ class App extends Component {
         <Header />
 
         <div className="main__content">
-          <Switch location={this.props.location}>
-            <Route path="/" exact render={() => <Home authenticated={isAuthenticated}/>} />
-            {/* UserRoute renderar component ef authenticated=true annars redirectar hann */}
-            <UserRoute path="/login" authenticated={!isAuthenticated} redirect="/profile" component={Login} />
-            <UserRoute path="/register" authenticated={!isAuthenticated} redirect="/profile" component={Register} />
-            <UserRoute exact path="/profile" authenticated={isAuthenticated} redirect="/login" component={Profile} />
-            <UserRoute exact path="/users" authenticated={isAuthenticated} redirect="/login" component={Users} />
-            <Route exact path="/books" component={Books} />
-            <Route path="/books/:id" component={BookID} />
+          <div className="border">
+            <Switch location={this.props.location}>
+              <Route path="/" exact render={() => <Home authenticated={isAuthenticated}/>} />
+              {/* UserRoute renderar component ef authenticated=true annars redirectar hann */}
+              <UserRoute path="/login" authenticated={!isAuthenticated} redirect="/profile" component={Login} />
+              <UserRoute path="/register" authenticated={!isAuthenticated} redirect="/profile" component={Register} />
+              <UserRoute exact path="/profile" authenticated={isAuthenticated} redirect="/login" component={Profile} />
+              <UserRoute exact path="/users" authenticated={isAuthenticated} redirect="/login" component={Users} />
+              <Route exact path="/books" component={Books} />
+              <Route path="/books/:id" component={BookID} />
 
 
-            {/* todo fleiri route */}
-            <Route component={NotFound} />
-          </Switch>
+              {/* todo fleiri route */}
+              <Route component={NotFound} />
+            </Switch>
+          </div>
         </div>
 
       </main>

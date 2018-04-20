@@ -23,3 +23,25 @@
 	border-radius: 2px;
 	width: 16em;
 }
+
+.border {
+	margin: 20px;
+}
+
+.buttonLayout{
+	display: flex;
+}
+
+.pageHolder{
+	display: flex;
+	align-items: center;
+	margin-right: 10px;
+}
+
+.page{
+	margin-bottom: 0;
+}
+
+.pageButton{
+	margin: 0 10px 0 0;
+}

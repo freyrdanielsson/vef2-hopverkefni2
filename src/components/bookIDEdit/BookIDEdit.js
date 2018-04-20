@@ -57,20 +57,22 @@ class BookIDEdit extends Component {
                 pageCount, category, language, errors, initial, categories} = this.state;
 		if (isPatching) {
 			return (
-			<div>
+			<div className="textView">
 				<p><em>Uppfæri bók...</em></p>
 			</div>
 			);
         }
 
-        if(message){
-            if(typeof message === 'string'){
+        if(message && message.status >= 400){
+            if(message.result.error){
                 return(
-                    <p>Tókst ekki að uppfæra bók</p>
+                    <div className="textView">
+                        <p><em>Tókst ekki að uppfæra bók</em></p>
+                    </div>
                 );
             }
             const err = initial ? '' : 'Error';
-            message.map( msg =>{
+            message.result.errors.map( msg =>{
                 errors[msg.field] = err;
             });
         }
@@ -92,41 +94,59 @@ class BookIDEdit extends Component {
             );
         }
         return(
-            <div>
+            <div className="bookEditPage">
                 <h1>Breyta bók</h1>
                 <ul>
-                    {!initial && message && message.map( msg =>
+                    {!initial && message && message.result.errors && message.result.errors.map( msg =>
                         <li key={msg.field}>{msg.message}</li>
                     )}
                 </ul>
-                    
-                <form onSubmit={this.handleSubmit}>
-                    <label className={`label${errors.title}`}>Titill:</label> 
-                    <input className={`input${errors.title}`} type="text" name="title" defaultValue={title} onChange={this.handleInputChange}/>
-                    <label className={`label${errors.author}`}>Höfundur:</label> 
-                    <input className={`input${errors.author}`} type="text" name="author" defaultValue={author} onChange={this.handleInputChange}/>
-                    <label className={`label${errors.description}`}>Lýsing:</label> 
-                    <textarea className={`input${errors.description}`} type="textarea" name="description" defaultValue={description} onChange={this.handleInputChange}/>
-                   
-                    <select name="category" defaultValue={category} onChange={this.handleInputChange}>
-                        {categories.map( (cat) =>
-                            <option key={cat.id} value={cat.id}>{cat.title}</option>
-                        )}
-                    </select>
-
-                    <label className={`label${errors.isbn10}`}>ISBN10:</label> 
-                    <input className={`input${errors.isbn10}`} type="text" name="isbn10" defaultValue={isbn10} onChange={this.handleInputChange}/>
-                    <label className={`label${errors.isbn13}`}>ISBN13:</label> 
-                    <input className={`input${errors.isbn13}`} type="text" name="isbn13" defaultValue={isbn13} onChange={this.handleInputChange}/>
-                    <label className={`label${errors.published}`}>Útgefin:</label> 
-                    <input className={`input${errors.published}`} type="text" name="published" defaultValue={published} onChange={this.handleInputChange}/>
-                    <label className={`label${errors.pagecount}`}>Fjöldi síða:</label> 
-                    <input className={`input${errors.pagecount}`} type="text" name="pageCount" defaultValue={pageCount} onChange={this.handleInputChange}/>
-                    <label className={`label${errors.language}`}>Tungumál:</label> 
-                    <input className={`input${errors.language}`} type="text" name="language" defaultValue={language} onChange={this.handleInputChange}/>
-                    <Button>Vista</Button>
-                </form>
-                    <Button onClick={this.handleChange}>Til baka</Button>
+                <div className="form">
+                    <form onSubmit={this.handleSubmit}>
+                        <div className="form form--container">
+                            <label className={`label${errors.title}`}>Titill:</label> 
+                            <input className={`form__input ${errors.title}`} type="text" name="title" defaultValue={title} onChange={this.handleInputChange}/>
+                        </div>
+                        <div className="form form--container">
+                            <label className={`label${errors.author}`}>Höfundur:</label> 
+                            <input className={`form__input ${errors.author}`} type="text" name="author" defaultValue={author} onChange={this.handleInputChange}/>
+                        </div>
+                        <div className="form form--container area">
+                            <label className={`label${errors.description}`}>Lýsing:</label> 
+                            <textarea className={`form__input ${errors.description} area`} type="textarea" name="description" defaultValue={description} onChange={this.handleInputChange}/>
+                        </div>
+                        <div className="form form--container area">
+                            <label>Flokkur:</label>
+                            <select name="category" defaultValue={category} onChange={this.handleInputChange}>
+                                {categories.map( (cat) =>
+                                    <option key={cat.id} value={cat.id}>{cat.title}</option>
+                                )}
+                            </select>
+                        </div>
+                        <div className="form form--container">
+                            <label className={`label${errors.isbn10}`}>ISBN10:</label> 
+                            <input className={`form__input ${errors.isbn10}`} type="text" name="isbn10" defaultValue={isbn10} onChange={this.handleInputChange}/>
+                        </div>
+                        <div className="form form--container">
+                            <label className={`label${errors.isbn13}`}>ISBN13:</label> 
+                            <input className={`form__input ${errors.isbn13}`} type="text" name="isbn13" defaultValue={isbn13} onChange={this.handleInputChange}/>
+                        </div>
+                        <div className="form form--container">
+                            <label className={`label${errors.published}`}>Útgefin:</label> 
+                            <input className={`form__input ${errors.published}`} type="text" name="published" defaultValue={published} onChange={this.handleInputChange}/>
+                        </div>
+                        <div className="form form--container">   
+                            <label className={`label${errors.pagecount}`}>Fjöldi síða:</label> 
+                            <input className={`form__input ${errors.pagecount}`} type="text" name="pageCount" defaultValue={pageCount} onChange={this.handleInputChange}/>
+                        </div>
+                        <div className="form form--container">
+                            <label className={`label${errors.language}`}>Tungumál:</label> 
+                            <input className={`form__input ${errors.language}`} type="text" name="language" defaultValue={language} onChange={this.handleInputChange}/>
+                        </div>
+                        <Button>Vista</Button>
+                    </form>
+                </div>
+                    <Button className="back" onClick={this.handleChange}>Til baka</Button>
             </div>
         );
     }

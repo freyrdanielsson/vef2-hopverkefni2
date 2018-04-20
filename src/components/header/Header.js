@@ -15,8 +15,9 @@ class Header extends Component {
     
     return (
       <header className="header">
-        <h1 className="header__heading"><Link to="/">Bókasafnið</Link></h1>
-
+        <div className="heading">
+          <h1 className="header__heading"><Link to="/">Bókasafnið</Link></h1>
+        </div>
         <Search/>
         <LoginHeader/>
       </header>
