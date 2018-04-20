@@ -24,6 +24,7 @@
 	width: 16em;
 }
 
+
 @media (max-width: 600px) {
   .form {
     flex-direction: column;
@@ -40,4 +41,26 @@
   .main__content {
     padding: 0 10px;
   }
+
+.border {
+	margin: 20px;
+}
+
+.buttonLayout{
+	display: flex;
+}
+
+.pageHolder{
+	display: flex;
+	align-items: center;
+	margin-right: 10px;
+}
+
+.page{
+	margin-bottom: 0;
+}
+
+.pageButton{
+	margin: 0 10px 0 0;
+
 }

@@ -1,0 +1,30 @@
+.reviewComponent{
+    max-width: 600px;
+}
+
+.reviewForm{
+    display: flex;
+    flex-direction: column;
+}
+
+.reviewArea{
+    resize: none;
+    margin-bottom: 20px;
+    max-width: 600px;
+    height: 160px;
+    border-radius: 5px;
+}
+
+.einkunnBox{
+    width: 100px;
+    margin-bottom: 20px;
+}
+
+.reviewButtons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.haettaVid{
+    background-color: #941111;
+}

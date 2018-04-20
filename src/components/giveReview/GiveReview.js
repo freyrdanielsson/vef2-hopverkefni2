@@ -69,20 +69,23 @@ class GiveReview extends Component {
         }
 
         return(
-            <div>
-            <form onSubmit={this.handleSubmit}>
-                <label>Um bók:</label>
-                <textarea type="textarea" name="review" onChange={this.handleInputChange}/>
-                <select name="grade" defaultValue={1} onChange={this.handleInputChange}>
-                    <option value={1}>1</option>
-                    <option value={2}>2</option>
-                    <option value={3}>3</option>
-                    <option value={4}>4</option>
-                    <option value={5}>5</option>
-                </select>
-                <Button>Vista</Button>
-            </form>
-            <Button className="haettaVid" onClick={this.handleChange}>Hætta við</Button>
+            <div className="reviewComponent">
+                <form className="reviewForm" onSubmit={this.handleSubmit}>
+                    <label>Um bók:</label>
+                    <textarea className="reviewArea" type="textarea" name="review" onChange={this.handleInputChange}/>
+                    <label>Einkunn:</label>
+                    <select className="einkunnBox" name="grade" defaultValue={1} onChange={this.handleInputChange}>
+                        <option value={1}>1</option>
+                        <option value={2}>2</option>
+                        <option value={3}>3</option>
+                        <option value={4}>4</option>
+                        <option value={5}>5</option>
+                    </select>
+                </form>
+                <div className="reviewButtons">
+                    <Button onClick={this.handleSubmit}>Vista</Button>
+                    <Button className="haettaVid" onClick={this.handleChange}>Hætta við</Button>
+                </div>
             </div>
         );
     }

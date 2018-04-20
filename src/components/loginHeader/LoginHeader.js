@@ -35,8 +35,10 @@ class LoginHeader extends Component {
     
     
     return (
-			<Link to="/login">Innskráning</Link>
-    );
+			<div className="loginLink">
+				<Link to="/login">Innskráning</Link>
+			</div>
+		);
   }
 }
 

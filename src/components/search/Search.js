@@ -8,11 +8,13 @@ class Search extends Component {
 
   render() {
     return (
-      <form action={`${window.location.origin}/books?query=&page=`}>
-        <input type="search" name="query" placeholder="Bókaleit"></input>
-        <input type="hidden" name="page" value={1} />
-        <Button type="submit" className="leitarButton">Leita</Button>
-      </form>
+      <div className="headerForm">
+        <form action={`${window.location.origin}/books?query=&page=`}>
+          <input type="search" name="query" placeholder="Bókaleit"></input>
+          <input type="hidden" name="page" value={1} />
+          <Button type="submit" className="leitarButton">Leita</Button>
+        </form>
+      </div>
     );
   }
 }

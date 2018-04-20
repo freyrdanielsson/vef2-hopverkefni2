@@ -38,7 +38,6 @@ export const registerReadBook = (bookId, review, rating) => {
     let register;
     try {
       register = await api.post('/users/me/read', {bookId, review, rating});
-      console.log(register);
     } catch (e) {
       return dispatch(registerError(e))
     }

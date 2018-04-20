@@ -9,3 +9,8 @@
 h1.header__heading a {
   text-decoration: none;
 }
+
+.heading{
+  display: flex;
+	align-items: center;
+}
