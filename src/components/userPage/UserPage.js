@@ -21,15 +21,15 @@ class UserPage extends Component {
 
         return (
             <section>
-                <div className="user">
+                <div className="user user--page">
                     <div className="user profile">
                         <img className="user profile img" src={profile} alt={user.usename}/>
                     </div>
-                    <div className="user info">
-                        <p>{user.username}</p>
+                    <div className="user user--info">
+                        <h2>{user.username}</h2>
                     </div>
                 </div>
-                <ul>
+                <ul className="user__list">
                     {items && (
                         items.map((book) => {
                     return (
@@ -46,15 +46,22 @@ class UserPage extends Component {
                     }))}
                 </ul>
                 {bookCount > 0 && (
-                <div>
-                    {page > 1 && <Button onClick={() => onClick(page - 1)}>Fyrri Síða</Button>}
-                    <p>{`Síða ${page}`}</p>
+                <div className="buttonLayout">
+                    {page > 1 && <Button className="pageButton" onClick={() => onClick(page - 1)}>Fyrri Síða</Button>}
+                    <div className="pageHolder">
+                        <p className="page">{`Síða ${page}`}</p>
+                    </div>
                     {bookCount >= 10 && <Button onClick={() => onClick(page + 1)}>Næsta Síða</Button>}
                 </div>
                 )}
-                {(page <= 0 || bookCount <= 0) && 
+                {(page === 1 && bookCount <= 0) && 
                     <div>
-                        <p>Oops, ekki fleiri bækur</p>
+                        <p>Engar lesnar bækur</p>
+                    </div>
+                }
+                {( page > 1 && bookCount <= 0 ) && 
+                    <div>
+                        <p>Ekki fleiri bækur</p>
                         <Button onClick={() => onClick(1)}>Fyrsta síða</Button>
                     </div>
                 }

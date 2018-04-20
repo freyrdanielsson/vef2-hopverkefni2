@@ -1,0 +1,12 @@
+.user__list {
+	list-style: none;
+}
+
+.user--page {
+	flex-direction: column;
+	margin: 20px 0;
+}
+
+.user--info {
+	font-weight: bold;
+}
