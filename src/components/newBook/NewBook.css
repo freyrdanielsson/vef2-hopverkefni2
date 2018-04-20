@@ -2,6 +2,20 @@
     color: red;
 }
 
-.inputError{
+.form__input.Error{
     border-color: red;
+}
+
+.form__input.discription {
+	background-color: red;
+}
+
+.form__input.area {
+    margin: 0;
+    width: 100%;
+    height: 20vh;
+}
+
+.area {
+    flex-direction: column;
 }

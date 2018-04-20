@@ -12,7 +12,7 @@ class Register extends Component {
 
     return (
       <div>
-        <Helmet defaultTitle="Nýskráning" />
+        <Helmet title="Nýskráning" />
         <RegisterForm/>
 
         <Link to='/login'>Innskráning</Link>

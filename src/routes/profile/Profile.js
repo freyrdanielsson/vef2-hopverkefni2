@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Helmet from 'react-helmet';
 
 import MeUrl from '../../components/meUrl';
 import MeForm from '../../components/meForm';
@@ -14,6 +15,7 @@ export default class Profile extends Component {
 
     return (
       <div>
+        <Helmet title="Mín síða"/>
         <h1>Upplýsingar</h1>
         <MeUrl className='profile'/>
         <MeForm className='name' type="text" label={this.props.name} buttonText="Uppfæra nafn"/>
