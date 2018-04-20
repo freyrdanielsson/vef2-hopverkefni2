@@ -55,15 +55,15 @@ class LoginForm extends Component {
 				{message && (
 					<p>{message}</p>
 				)}
-				<div className="form">
+				<div className="form row">
 					<form method="POST" onSubmit={this.handleSubmit}>
 
-						<div className="form form--container">
+						<div className="form form--container col col-12">
 							<label htmlFor="username">Notendanafn:</label>
 							<input className="form__input" id="username" type="text" name="username" value={username} onChange={this.handleInputChange} />
 						</div>
 
-						<div className="form form--container">
+						<div className="form form--container col col-12">
 							<label htmlFor="password">Lykilorð:</label>
 							<input className="form__input" id="password" type="password" name="password" value={password} onChange={this.handleInputChange} />
 						</div>

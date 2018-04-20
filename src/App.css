@@ -23,3 +23,21 @@
 	border-radius: 2px;
 	width: 16em;
 }
+
+@media (max-width: 600px) {
+  .form {
+    flex-direction: column;
+  }
+  .form__input {
+    margin: 0;
+  }
+  .form--container {
+    align-items: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .main__content {
+    padding: 0 10px;
+  }
+}
