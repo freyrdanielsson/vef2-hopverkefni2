@@ -8,7 +8,7 @@ import Button from '../button';
 import NotFound from '../../routes/not-found';
 import PropTypes from 'prop-types';
 import { Route, NavLink, Link, Switch, withRouter } from 'react-router-dom'
-
+import UserRoute from '../user-route'
 import BookIDView from '../bookIDView'
 import BookIDEdit from '../bookIDEdit'
 import './BookIDFetch.css';
@@ -30,7 +30,7 @@ class BookIDFetch extends Component {
     }
 
     componentDidMount() {
-        const { dispatch, id, url, } = this.props;
+        const { dispatch, id } = this.props;
         dispatch(fetchBooks(`/${id}`));
         dispatch(fetchCategories());
     }
@@ -43,8 +43,8 @@ class BookIDFetch extends Component {
     }
 
     render() {
-        const { isFetching, books, error, statusCode, id, url, fetchingCategories, 
-                categoryError, categorieStatusCode, categories } = this.props;
+        const { isFetching, books, error, statusCode, id, fetchingCategories, 
+                categoryError, categorieStatusCode, categories, isAuthenticated } = this.props;
         const { stateBook } = this.state;
         const thisBook = stateBook ? stateBook : books;
 
@@ -65,7 +65,7 @@ class BookIDFetch extends Component {
         }
         return (
             <section>
-                <Route path="/books/:id/edit" render={() =><BookIDEdit books={thisBook} id={id} categories={categories.items}/>} />
+                <UserRoute path="/books/:id/edit" authenticated={isAuthenticated} redirect="/login" component={() =><BookIDEdit books={thisBook} id={id} categories={categories.items}/>} />
                 <Route exact path="/books/:id" render={()=><BookIDView books={thisBook} id={id}/>} />
             </section>     
         );
@@ -81,7 +81,8 @@ const mapStateToProps = (state) => {
       fetchingCategories: state.categories.fetchingCategories,
       categoryError: state.categories.categoryError,
       categories: state.categories.categories,
-      categorieStatusCode: state.categories.statusCode
+      categorieStatusCode: state.categories.statusCode,
+      isAuthenticated: state.auth.isAuthenticated
     }
   }
   

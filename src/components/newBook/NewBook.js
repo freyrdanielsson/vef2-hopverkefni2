@@ -71,7 +71,7 @@ class NewBook extends Component {
         }
 
         return(
-            <div>
+            <div className="newBookPage">
                 <Helmet title="Ný bók"/>
                 <h1>Ný bók</h1>
                 <ul>

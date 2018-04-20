@@ -17,6 +17,10 @@ export default class BookIDView extends Component {
         id: PropTypes.string,
         books: PropTypes.shape()
     }
+
+    handleBack = async () => {
+        window.history.back();
+    }
     
     render() {
         const { books, id } = this.props;
@@ -38,7 +42,7 @@ export default class BookIDView extends Component {
                         <GiveReview id={id}/>
                     </div>
                     <div>     
-                        <Button onClick={this.context.router.history.goBack}>Til baka</Button>
+                        <Button onClick={this.handleBack}>Til baka</Button>
                     </div>
                 </div>
             </div>

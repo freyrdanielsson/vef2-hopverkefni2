@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router';
-
+import PropTypes from 'prop-types';
 import { fetchBooks } from '../../actions/books';
 import Button from '../button';
 import NotFound from '../../routes/not-found';
@@ -13,6 +13,10 @@ import './BooksView.css';
 class BooksView extends Component {
 
     state = { page: 1}
+
+    static propTypes = {
+        url: PropTypes.string,
+    }
     /**
      * Fall sem fær inn gildi og athugar hvort það sé valid
      * fyrir 'page' parametran í Url-inu
@@ -59,6 +63,16 @@ class BooksView extends Component {
         dispatch(fetchBooks(validUrl));
     } 
 
+    componentDidUpdate(prevProps){
+        if(this.props.url !== prevProps.url){
+            const { dispatch } = this.props;
+            const params = this.getUrlParams();
+            this.setState({ page: params.page });
+            const validUrl = params.page <= 0 ? '' : `?search=${params.query}&offset=${(params.page-1)*10}&limit=10`;
+            dispatch(fetchBooks(validUrl));
+        }
+    }
+
     handleChange = async (searchQuery, pageNr) => {
         window.history.pushState(null, '', `/books?query=${searchQuery}&page=${pageNr}`);
         const { dispatch } = this.props;
@@ -86,13 +100,15 @@ class BooksView extends Component {
         const params = this.getUrlParams();
         const bookCount = books.items ? books.items.length : 0;
         
-        if(page <= 0 || bookCount <= 0){
+        if(page <= 0){
             return <NotFound/>;
         }
 
+        const heading = params.query ? `Bókaleit: ${params.query}` : 'Bækur';
         return (
           <section>
-            <h2 className="bookHeading">Bækur</h2>
+            <h2 className="bookHeading">{heading}</h2>
+            {bookCount === 0 && <p>Engar bækur fundust</p>}
             <ul>
                 {books.items && (
                     books.items.map((book) => {

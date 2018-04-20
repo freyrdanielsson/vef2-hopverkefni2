@@ -3,12 +3,14 @@ import PropTypes from 'prop-types';
 import Button from '../button';
 import { registerReadBook } from '../../actions/readBook';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 import './GiveReview.css';
 
 class GiveReview extends Component {
 
     state = {
+        back: true,
         visible: false,
         review: '',
         grade: 1,
@@ -23,6 +25,7 @@ class GiveReview extends Component {
         e.preventDefault();
         const { dispatch, id } =this.props;
         const { review, grade } = this.state;
+        this.setState({ back: false });
         dispatch(registerReadBook( id, review, grade));
     }
 
@@ -35,34 +38,48 @@ class GiveReview extends Component {
     }
 
     handleChange = async () => {
-        const { visible } = this.state;
-        const setVisible = visible ? false : true;
-        this.setState({ visible: setVisible});
+        const { isAuthenticated } = this.props;
+        if(isAuthenticated){
+            const { visible } = this.state;
+            const setVisible = visible ? false : true;
+            this.setState({ visible: setVisible});
+        }
+    }   
+
+    componentDidMount(){
+        this.setState({ 
+            back: true,
+            visible: false,
+        });
     }
 
     render(){
-        const { visible } = this.state;
-        const { isFetching, readBook, message } = this.props;
+        const { visible, back } = this.state;
+        const { isFetching, readBook, isAuthenticated } = this.props;
 
-        if(!visible && !readBook.status){
+        if(back && !visible){
             return (
-                <Button onClick={this.handleChange}>Lesin bók</Button>
+                <Button className={`show${isAuthenticated}`} onClick={this.handleChange}>Lesin bók</Button>
             );
         }
 
-        if(isFetching){
+        if(!back && isFetching){
             return (
                 <p>Skrái lestur...</p>
             );
         }
 
-        if(message || readBook.status >= 400){
+        if(!back && readBook.status >= 400){
+            if(readBook.status === 401){
+                return(<Redirect to={`/login`} />)
+            }
+
             return(
                 <p>Tókst ekki að skrá lestur</p>
             );
         }
 
-        if(readBook && readBook.status === 201){
+        if(!back && readBook.status === 201){
             return(
                 <p>Lestur skráður</p>
             );
@@ -95,7 +112,7 @@ const mapStateToProps = (state) => {
     return {
       isFetching: state.readBook.isFetching,
       readBook: state.readBook.readBook,
-      message: state.readBook.message
+      isAuthenticated: state.auth.isAuthenticated
     }
   }
   
