@@ -151,7 +151,7 @@ export const deleteBook = (id, className, url) => {
     }
 
     if (del.status === 401) {
-      return dispatch(loginError(del.result.error))
+      return dispatch(loginError({error: 'Expired token'}));
     }
 
     dispatch(fetch('/users/me/read', url, className));
