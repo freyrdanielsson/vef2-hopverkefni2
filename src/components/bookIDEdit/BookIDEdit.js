@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Button from '../button';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { patchBook } from '../../actions/patchBook';
 import { connect } from 'react-redux';
 
@@ -55,6 +55,7 @@ class BookIDEdit extends Component {
         const { book, isPatching, message, id } = this.props;
         const { title, author, description, isbn10, isbn13, published,
                 pageCount, category, language, errors, initial, categories} = this.state;
+
 		if (isPatching) {
 			return (
 			<div className="textView">
@@ -64,6 +65,9 @@ class BookIDEdit extends Component {
         }
 
         if(message && message.status >= 400){
+            if(message.status === 401){
+                return(<Redirect to={`/login`} />)
+            }
             if(message.result.error){
                 return(
                     <div className="textView">

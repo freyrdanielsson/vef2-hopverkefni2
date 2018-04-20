@@ -10,7 +10,7 @@ class Search extends Component {
     return (
       <div className="headerForm">
         <form action={`${window.location.origin}/books?query=&page=`}>
-          <input type="search" name="query" placeholder="Bókaleit"></input>
+          <input  className="searchInput" type="search" name="query" placeholder="Bókaleit"></input>
           <input type="hidden" name="page" value={1} />
           <Button type="submit" className="leitarButton">Leita</Button>
         </form>
