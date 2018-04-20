@@ -134,6 +134,8 @@ export const fetch = (baseUrl, url, className) => {
       if(items){
         return dispatch(receiveItems(items));
       }
+      console.log(response.result);
+      
       return dispatch(receiveUpload(response.result));
     }
   }
@@ -141,14 +143,17 @@ export const fetch = (baseUrl, url, className) => {
 
 export const deleteBook = (id, className, url) => {
   return async (dispatch) => {
+    let del
     try {
-      const del = await api.deleteBook(`/users/me/read/${id}`);
+       del = await api.deleteBook(`/users/me/read/${id}`);
     } catch (e) {
-      console.log(e);
-      
       return dispatch(uploadError(e))
     }
 
-    dispatch(fetch(url, className));
+    if (del.status === 401) {
+      return dispatch(loginError(del.result.error))
+    }
+
+    dispatch(fetch('/users/me/read', url, className));
   }
 }

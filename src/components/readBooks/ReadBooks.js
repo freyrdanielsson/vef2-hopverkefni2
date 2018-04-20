@@ -84,14 +84,27 @@ class ReadBooks extends Component {
 			);
         }
         
-        if(page <= 0 || bookCount <= 0){
+        if(page === 1 && bookCount <= 0){
             return (
                 <div>
-                    <p>Oops, ekki fleiri bækur</p>
-                    <Button onClick={() => this.handleChange(1)}>Fyrsta síða</Button>
-                </div>
+                    <h2 className="read read--header">Lesnar bækur</h2>
+                    <p>Engar lesnar bækur</p>
+                </div>     
             )
         }
+
+        if(page > 1 && bookCount <= 0){
+            return (
+                <div>
+                    <h2 className="read read--header">Lesnar bækur</h2>
+                    <p>Ekki fleiri bækur</p>
+                    <Button onClick={() => this.handleChange(1)}>Fyrsta síða</Button>
+                </div>     
+            )
+        }
+
+        
+
         
         return (
             <section className="read">
