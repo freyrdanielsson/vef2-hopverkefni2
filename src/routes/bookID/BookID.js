@@ -13,7 +13,6 @@ class BookID extends Component {
     render() {
         const { isAuthenticated } = this.props;
         const slug = this.props.match.params.id;
-
         return ( slug === 'new' 
             ? <UserRoute exact path="/books/new" authenticated={isAuthenticated} redirect="/login" component={NewBook} />
             : <BookIDFetch id={slug} url={this.props.location.pathname} updatedBook={this.props.location.book}/>

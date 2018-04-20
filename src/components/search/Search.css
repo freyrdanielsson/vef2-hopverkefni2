@@ -6,3 +6,15 @@ Button, input {
 .leitarButton {
     padding: 5px;
 }
+
+.headerForm{
+    display: flex;
+	align-items: center;
+}
+
+@media (max-width: 650px) {
+    .headerForm{
+        display: none;
+    }
+  }
+  

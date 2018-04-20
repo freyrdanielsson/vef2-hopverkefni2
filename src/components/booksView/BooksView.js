@@ -92,13 +92,13 @@ class BooksView extends Component {
 
         return (
           <section>
-            <h2>Bækur</h2>
+            <h2 className="bookHeading">Bækur</h2>
             <ul>
                 {books.items && (
                     books.items.map((book) => {
                 return (
-                   <li key={book.id}>
-                        <Link to={`/books/${book.id}`}>{book.title}</Link>
+                   <li key={book.id} className="bookList">
+                        <Link to={`/books/${book.id}`} className="bookLink">{book.title}</Link>
                         <p>
                             {book.author && (`Eftir ${book.author}`)}
                             {book.published && (`, gefin út ${book.published}`)}
@@ -108,10 +108,12 @@ class BooksView extends Component {
               }))}
             </ul>
             {bookCount > 0 && (
-                <div>
-                    {page > 1 && <Button onClick={() => this.handleChange(params.query, page - 1)}>Fyrri Síða</Button>}
-                    <p>{`Síða ${page}`}</p>
-                    {bookCount >= 10 && <Button onClick={() => this.handleChange(params.query, page + 1)}>Næsta Síða</Button>}
+                <div className="buttonLayout">
+                    {page > 1 && <Button onClick={() => this.handleChange(params.query, page - 1)} className="pageButton">Fyrri Síða</Button>}
+                    <div className="pageHolder">
+                        <p className="page">{`Síða ${page}`}</p>
+                    </div>
+                    {bookCount >= 10 && <Button onClick={() => this.handleChange(params.query, page + 1)} className="pageButton">Næsta Síða</Button>}
                 </div>
             )}
           </section>

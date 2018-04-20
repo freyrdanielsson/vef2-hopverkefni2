@@ -138,10 +138,12 @@ class UsersList extends Component {
                     }))}
                 </ul>
                 {userCount > 0 && (
-                <div>
-                    {page > 1 && <Button onClick={() => this.handleUsersChange(page - 1)}>Fyrri Síða</Button>}
-                    <p>{`Síða ${page}`}</p>
-                    {userCount >= 10 && <Button onClick={() => this.handleUsersChange(page + 1)}>Næsta Síða</Button>}
+                <div className="buttonLayout">
+                    {page > 1 && <Button onClick={() => this.handleUsersChange(page - 1)} className="pageButton">Fyrri Síða</Button>}
+                    <div className="pageHolder">
+                        <p className="page">{`Síða ${page}`}</p>
+                    </div> 
+                    {userCount >= 10 && <Button onClick={() => this.handleUsersChange(page + 1)} className="pageButton">Næsta Síða</Button>}
                 </div>
                 )}
             </div>

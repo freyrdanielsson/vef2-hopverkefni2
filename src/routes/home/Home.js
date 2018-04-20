@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+import './Home.css';
+
+
 class Home extends Component {
 
   render() {
@@ -8,17 +11,17 @@ class Home extends Component {
     const { authenticated } = this.props;
 
     return (
-      <section>
-      <h1>Velkomin á bókasafnið</h1>
+      <section className="home">
+      <h1 className="welcome">Velkomin á bókasafnið</h1>
       <div>
         {authenticated 
-        ? <p>Þú ert skráður notandi og getur því &nbsp;
+        ? <div><p>Þú ert skráður notandi og getur því &nbsp;
           <Link to="/books/new">skráð bækur</Link> &nbsp;
           og breytt &nbsp;
           <Link to="/books">þeim sem til eru</Link>.&nbsp;
-           Einnig getur þú &nbsp;
+          </p><p> Einnig getur þú &nbsp;
           <Link to="/users">skoðað aðra notendur</Link>.&nbsp;
-        </p>
+        </p></div>
         : <p>Til að njóta bókasafnsins til fullnustu mælum við með að &nbsp;
           <Link to="/login">skrá sig inn</Link>. &nbsp;
           Þangað til getur þú skoðað &nbsp;

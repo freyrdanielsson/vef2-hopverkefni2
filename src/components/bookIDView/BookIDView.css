@@ -1,0 +1,16 @@
+.bookIdpage {
+    min-width: 300px;
+}
+
+.bookInfo{
+    margin-bottom: 80px;
+}
+
+.buttonHolder {
+    display: flex;
+    flex-direction: column;
+}
+
+.readBook{
+    margin-bottom: 40px;
+}

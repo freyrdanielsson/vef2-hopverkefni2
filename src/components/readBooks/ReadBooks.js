@@ -115,10 +115,12 @@ class ReadBooks extends Component {
                     }))}
                 </ul>
                 {bookCount > 0 && (
-                <div>
-                    {page > 1 && <Button onClick={() => this.handleChange(page - 1)}>Fyrri Síða</Button>}
-                    <p>{`Síða ${page}`}</p>
-                    {bookCount >= 10 && <Button onClick={() => this.handleChange(page + 1)}>Næsta Síða</Button>}
+                <div className="buttonLayout">
+                    {page > 1 && <Button onClick={() => this.handleChange(page - 1)} className="pageButton">Fyrri Síða</Button>}
+                    <div className="pageHolder">
+                        <p className="page">{`Síða ${page}`}</p>
+                    </div>
+                    {bookCount >= 10 && <Button onClick={() => this.handleChange(page + 1)} className="pageButton">Næsta Síða</Button>}
                 </div>
                 )}
             </section>

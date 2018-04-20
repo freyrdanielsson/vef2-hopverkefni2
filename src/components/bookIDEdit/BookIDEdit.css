@@ -1,7 +1,31 @@
+.bookEditPage{
+    margin-left: 40px;
+}
+
 .labelError{
     color: red;
 }
 
-.inputError{
+.form__input.Error{
     border-color: red;
+}
+
+.form__input.discription {
+	background-color: red;
+}
+
+.form__input.area {
+    resize: none;
+    max-width: 600px;
+    height: 160px;
+    border-radius: 5px;
+}
+
+.area {
+    flex-direction: column;
+    margin-bottom: 0;
+}
+
+.back {
+    margin-top: 40px;
 }
