@@ -30,7 +30,7 @@ class BookIDFetch extends Component {
     }
 
     componentDidMount() {
-        const { dispatch, id, url, } = this.props;
+        const { dispatch, id } = this.props;
         dispatch(fetchBooks(`/${id}`));
         dispatch(fetchCategories());
     }
@@ -43,7 +43,7 @@ class BookIDFetch extends Component {
     }
 
     render() {
-        const { isFetching, books, error, statusCode, id, url, fetchingCategories, 
+        const { isFetching, books, error, statusCode, id, fetchingCategories, 
                 categoryError, categorieStatusCode, categories, isAuthenticated } = this.props;
         const { stateBook } = this.state;
         const thisBook = stateBook ? stateBook : books;
