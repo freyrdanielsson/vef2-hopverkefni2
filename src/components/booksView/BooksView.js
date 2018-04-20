@@ -90,9 +90,10 @@ class BooksView extends Component {
             return <NotFound/>;
         }
 
+        const heading = params.query ? `Bókaleit: ${params.query}` : 'Bækur';
         return (
           <section>
-            <h2 className="bookHeading">Bækur</h2>
+            <h2 className="bookHeading">{heading}</h2>
             <ul>
                 {books.items && (
                     books.items.map((book) => {
