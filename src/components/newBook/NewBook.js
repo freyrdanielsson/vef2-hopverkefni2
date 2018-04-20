@@ -35,6 +35,7 @@ class NewBook extends Component {
 	handleSubmit = async (e) => {
         e.preventDefault();
         const { dispatch } = this.props;
+        this.setState({errors: {}});
         dispatch(post('/books', this.state));
     }
     
@@ -94,7 +95,7 @@ class NewBook extends Component {
                     </div>
                     <div className="form form--container">
                         <select name="category" onChange={this.handleInputChange}>
-                        <option defaultValue={0}>Veldu flokk:</option>
+                        <option className={`label${errors.category}`} defaultValue={0}>Veldu flokk:</option>
                             {categories.items && categories.items.map( (cat) =>
                                 <option key={cat.id} value={cat.id}>{cat.title}</option>
                             )}

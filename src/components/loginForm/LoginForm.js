@@ -41,7 +41,7 @@ class LoginForm extends Component {
 
 		if (isFetching) {
 			return (
-			<div className>
+			<div>
 				<Helmet defaultTitle="Skrái inn.."/>
 				<p>Skrái inn <em>{username}</em>...</p>
 			</div>
