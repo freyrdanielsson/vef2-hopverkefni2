@@ -105,8 +105,10 @@ class BooksView extends Component {
         }
 
         const heading = params.query ? `Bókaleit: ${params.query}` : 'Bækur';
+        const helmet = page === 1 ? 'Bækur' : `Bækur, síða ${page}`
         return (
           <section>
+            <Helmet title={helmet} />
             <h2 className="bookHeading">{heading}</h2>
             {bookCount === 0 && <p>Engar bækur fundust</p>}
             <ul>

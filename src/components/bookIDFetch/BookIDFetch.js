@@ -47,7 +47,6 @@ class BookIDFetch extends Component {
                 categoryError, categorieStatusCode, categories, isAuthenticated } = this.props;
         const { stateBook } = this.state;
         const thisBook = stateBook ? stateBook : books;
-
         if(statusCode === 404){
             return <NotFound/>;
         }
