@@ -38,10 +38,12 @@ class RegisterForm extends Component {
 		const { isFetching, message } = this.props;
 
 		if (isFetching) {
-			<div>
-			<Helmet defaultTitle="Skrái notanda..."/>
-			<p>Bökum nýjan notanda: <em>{username}</em>...</p>
-		</div>
+			return(
+				<div>
+					<Helmet defaultTitle="Skrái notanda..."/>
+					<p>Bökum nýjan notanda: <em>{username}</em>...</p>
+				</div>
+			);
 		}
 
 		return (

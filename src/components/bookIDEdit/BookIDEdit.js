@@ -32,7 +32,7 @@ class BookIDEdit extends Component {
 
 	handleSubmit = async (e) => {
         e.preventDefault();
-        const { dispatch, id, isPatching } = this.props;
+        const { dispatch, id } = this.props;
         this.setState({ errors: {}, initial: false });
         const patched = (({ title, author, category, description, isbn10, isbn13, published, pageCount, language }) => (
             { title, author, category, description, isbn10, isbn13, published, pageCount, language }))(this.state);
@@ -56,7 +56,6 @@ class BookIDEdit extends Component {
         const { book, isPatching, message, id } = this.props;
         const { title, author, description, isbn10, isbn13, published,
                 pageCount, category, language, errors, initial, categories} = this.state;
-            console.log(initial);
 		if (isPatching) {
 			return (
 			<div className="textView">
@@ -77,8 +76,8 @@ class BookIDEdit extends Component {
                 );
             }
             const err = initial ? '' : 'Error';
-            message.result.errors.map( msg =>{
-                errors[msg.field] = err;
+            message.result.errors.map( msg => {
+                return errors[msg.field] = err;
             });
         }
 
@@ -86,6 +85,7 @@ class BookIDEdit extends Component {
             // Skitamix því vefþjónustan skilar ekki 'categorytitle', bætum því við í book (responsið)
             categories.map((cat) => {
                if(cat.id === book.category) book.categorytitle = cat.title;
+               return book.categorytitle;
             })
             const newTo = { 
                 pathname:`/books/${id}`, 

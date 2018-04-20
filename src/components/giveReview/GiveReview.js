@@ -32,7 +32,7 @@ class GiveReview extends Component {
     handleInputChange = (e) => {
         const { name, value} = e.target;
 		if (name) {
-            const newValue = name === 'grade' ? parseInt(value) : value;
+            const newValue = name === 'grade' ? parseInt(value, 10) : value;
 			this.setState({ [name]: newValue });
 		}
     }
@@ -59,7 +59,7 @@ class GiveReview extends Component {
 
         if(back && !visible){
             return (
-                <Button className={`show${isAuthenticated}`} onClick={this.handleChange}>Lesin bók</Button>
+                <Button className={`show${isAuthenticated}`} onClick={this.handleChange}>Skrá lestur</Button>
             );
         }
 

@@ -11,7 +11,6 @@ import './Header.css';
 class Header extends Component {
 
   render() {
-    const { isAuthenticated , user} = this.props.auth;
     
     return (
       <header className="header">

@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Helmet from 'react-helmet';
-import { Redirect } from 'react-router';
 import { fetchBooks } from '../../actions/books';
 import { fetchCategories } from '../../actions/categories';
-import Button from '../button';
 import NotFound from '../../routes/not-found';
 import PropTypes from 'prop-types';
-import { Route, NavLink, Link, Switch, withRouter } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import UserRoute from '../user-route'
 import BookIDView from '../bookIDView'
 import BookIDEdit from '../bookIDEdit'
@@ -37,7 +34,7 @@ class BookIDFetch extends Component {
     
     componentDidUpdate(prevProps){
         if(this.props.url !== prevProps.url){
-            const { url, updatedBook } = this.props;
+            const { updatedBook } = this.props;
             updatedBook && this.setState({ stateBook: updatedBook});
         }
     }

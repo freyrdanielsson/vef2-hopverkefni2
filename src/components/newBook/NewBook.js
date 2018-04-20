@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import Button from '../button';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
-
 import { post } from '../../actions/post';
 import { fetchCategories } from '../../actions/categories';
 
@@ -50,7 +48,7 @@ class NewBook extends Component {
 
     render() {
         const { result, isFetching, message, categories } = this.props;
-        const { title, author, description, isbn10, isbn13, published, pageCount, language, errors, category} = this.state;
+        const { title, author, description, isbn10, isbn13, published, pageCount, language, errors} = this.state;
 
 		if(isFetching) {
 			return (
@@ -62,7 +60,7 @@ class NewBook extends Component {
 
         if(message){
             message.map( msg =>{
-                errors[msg.field] = 'Error';
+                return errors[msg.field] = 'Error';
             });
         }
 

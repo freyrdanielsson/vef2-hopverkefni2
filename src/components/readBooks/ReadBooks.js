@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
-import { Redirect } from 'react-router';
-
 import { fetch, deleteBook } from '../../actions/users';
 import Button from '../button';
-import NotFound from '../../routes/not-found';
-// import NotFound from '../../routes/not-found';
 
 import './ReadBooks.css';
 
@@ -21,7 +16,7 @@ class ReadBooks extends Component {
 
     // skilar -1 ef page er invalid annars page
     getPage(page) {
-        return (isNaN(page) || page <= 0) ? -1 : parseInt(page);
+        return (isNaN(page) || page <= 0) ? -1 : parseInt(page, 10);
     }
 
 
@@ -34,7 +29,7 @@ class ReadBooks extends Component {
             decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
             query  = window.location.search.substring(1);
 
-            while (match = search.exec(query)){
+            while((match = search.exec(query)) !== null){
                 urlParams[decode(match[1])] = decode(match[2]);
             }
 

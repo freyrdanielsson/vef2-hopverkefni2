@@ -31,11 +31,7 @@ class MeUrl extends Component {
 	}
 
 	render() {
-		const { isFetching, message, className } = this.props;
-		const { profile } = this.state;
-
-		
-		
+		const { isFetching, message, className } = this.props;		
 
 		if (isFetching === className) {
 			return (

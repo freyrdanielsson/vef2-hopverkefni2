@@ -36,7 +36,6 @@ class MeForm extends Component {
 
 	render() {
 		const {isFetching, type, label, buttonText, className } = this.props;
-		const { theSame } = this.state
 
 		if (isFetching === className) {
 			return (
