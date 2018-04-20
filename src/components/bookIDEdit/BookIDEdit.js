@@ -64,6 +64,11 @@ class BookIDEdit extends Component {
         }
 
         if(message){
+            if(typeof message === 'string'){
+                return(
+                    <p>Tókst ekki að uppfæra bók</p>
+                );
+            }
             const err = initial ? '' : 'Error';
             message.map( msg =>{
                 errors[msg.field] = err;

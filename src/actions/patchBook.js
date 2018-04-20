@@ -39,9 +39,9 @@ export const patchBook = (bookInfo, id) => {
       } catch (e) {
         return dispatch(uploadError(e))
       }
-  
-      if (update.result.errors) {
-        dispatch(uploadError(update.result.errors))
+      console.log(update);
+      if (update.result.error) {
+        dispatch(uploadError(update.result.error))
       }
       if (update.status === 200 || update.status === 201) {
         const book = update.result;

@@ -56,7 +56,7 @@ class GiveReview extends Component {
             );
         }
 
-        if(message){
+        if(message || readBook.status >= 400){
             return(
                 <p>Tókst ekki að skrá lestur</p>
             );
