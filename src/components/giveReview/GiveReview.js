@@ -32,7 +32,7 @@ class GiveReview extends Component {
     handleInputChange = (e) => {
         const { name, value} = e.target;
 		if (name) {
-            const newValue = name === 'grade' ? parseInt(value) : value;
+            const newValue = name === 'grade' ? parseInt(value, 10) : value;
 			this.setState({ [name]: newValue });
 		}
     }

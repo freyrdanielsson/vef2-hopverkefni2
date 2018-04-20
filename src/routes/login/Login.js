@@ -8,7 +8,6 @@ import LoginForm from '../../components/loginForm';
 class Login extends Component {
 
     render() {
-      const { authenticated } = this.props;
 
     return (
       <div>

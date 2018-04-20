@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
-import { Redirect } from 'react-router';
 import PropTypes from 'prop-types';
 import { fetchBooks } from '../../actions/books';
 import Button from '../button';
@@ -26,7 +25,7 @@ class BooksView extends Component {
         if(isNaN(page) || page <= 0){
             return -1;
         }
-        return parseInt(page);
+        return parseInt(page, 10);
     }
 
     /**
@@ -83,7 +82,7 @@ class BooksView extends Component {
     }
 
     render() {
-        const { isFetching, books, error, statusCode, location } = this.props;
+        const { isFetching, books, error, statusCode } = this.props;
         const { page } = this.state;
         if(error || statusCode >= 400) {
             return (

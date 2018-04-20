@@ -1,4 +1,4 @@
-import { REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_FAILURE } from '../actions/register';
+import { REGISTER_REQUEST, REGISTER_FAILURE } from '../actions/register';
 
 const initialState = {
   isFetching: false,
