@@ -29,7 +29,7 @@ class ReadBooks extends Component {
             decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
             query  = window.location.search.substring(1);
 
-            while (match = search.exec(query)){
+            while((match = search.exec(query)) !== null){
                 urlParams[decode(match[1])] = decode(match[2]);
             }
 
