@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Button from '../button';
 import { Link } from 'react-router-dom';
 import GiveReview from '../giveReview';
-
+import Helmet from 'react-helmet';
 
 import './BookIDView.css';
 
@@ -26,6 +26,7 @@ export default class BookIDView extends Component {
         const { books, id } = this.props;
         return(
             <div className="bookIdpage">
+                <Helmet title={books.title} />
                 <div className="bookInfo">
                     <h2>{books.title}</h2>
                     <p>{books.author && (`Eftir ${books.author}`)}</p>

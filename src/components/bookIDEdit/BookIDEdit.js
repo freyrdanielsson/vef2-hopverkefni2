@@ -4,6 +4,7 @@ import Button from '../button';
 import { Link, Redirect } from 'react-router-dom';
 import { patchBook } from '../../actions/patchBook';
 import { connect } from 'react-redux';
+import Helmet from 'react-helmet';
 
 
 import './BookIDEdit.css';
@@ -55,7 +56,7 @@ class BookIDEdit extends Component {
         const { book, isPatching, message, id } = this.props;
         const { title, author, description, isbn10, isbn13, published,
                 pageCount, category, language, errors, initial, categories} = this.state;
-
+            console.log(initial);
 		if (isPatching) {
 			return (
 			<div className="textView">
@@ -64,7 +65,7 @@ class BookIDEdit extends Component {
 			);
         }
 
-        if(message && message.status >= 400){
+        if(!initial && message && message.status >= 400){
             if(message.status === 401){
                 return(<Redirect to={`/login`} />)
             }
@@ -99,6 +100,7 @@ class BookIDEdit extends Component {
         }
         return(
             <div className="bookEditPage">
+                <Helmet title="Breyta bók" />
                 <h1>Breyta bók</h1>
                 <ul>
                     {!initial && message && message.result.errors && message.result.errors.map( msg =>
