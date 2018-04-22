@@ -6,7 +6,7 @@ Hópverkefni 2 snýst um að útbúa react framenda ofan á vefþjónustu úr h�
 
 ## Síða í keyrslu
 
-Lausn á þessu verkefni má finna [hér](https://warm-shore-65664.herokuapp.com)
+Lausn á þessu verkefni má finna [hér](https://warm-shore-65664.herokuapp.com).
 
 ## Notendaumsjón
 
@@ -14,6 +14,7 @@ Lausn á þessu verkefni má finna [hér](https://warm-shore-65664.herokuapp.com
 
 Mælt er með því að búa til notanda til þess að skoða lausnina og alla þá möguleika sem eru í boði.
 Einnig er hægt að nota notanda sem er til en það er notandi: *admin* lykilorð: *123123*.
+**ATH** Eftir að notandi hefur skráð sig inn gildir aðgangurinn (token) aðeins í 2 mínútur. Eftir það mun notandi ekki geta gert neitt sem krefst þess að vera innskráður og verður notandi sendur á [innskráningarsíðu](https://warm-shore-65664.herokuapp.com/login). Þetta var gert til að auðvelda yfirferð, þ.e. til að sjá hvað gerist þegar token rennur út.
 
 
 ### Aðgangsstýring
@@ -42,7 +43,7 @@ Innskráðir notendur geta:
 
 ## Tenging við vefþjónustu
 
-Allar tengingar við vefþjónustu eru í [api.js](src/api.js). Til að breyta um vefjþjónustu [sjá](#uppsetning)
+Allar tengingar við vefþjónustu eru í [api.js](src/api.js). Til að breyta um vefjþjónustu sjá [uppsetningu](#uppsetning).
 
 ## Útlit
 
@@ -61,7 +62,7 @@ Notað er redux fyrir auðkenningu og notanda. Einnig er redux notað við lestu
 
 ## Uppsetning
 
-Hægt er að halda áfram með þetta verkefni með því að clone-a þetta repo. Ath samt að það byggir á bakenda frá [osk](https://github.com/vefforritun/vef2-2018-h1-synilausn) sem hefur verið settur upp á [heroku](https://vef2-h1-synilausn.herokuapp.com) af okkur. Til að tengjast annari vefþjónustu skal einfaldlega breyta slóð sem gefin er upp í [.env](.env)
+Hægt er að halda áfram með þetta verkefni með því að clone-a þetta repo. Ath samt að það byggir á bakenda frá [osk](https://github.com/vefforritun/vef2-2018-h1-synilausn) sem hefur verið settur upp á [heroku](https://vef2-h1-synilausn.herokuapp.com) af okkur. Til að tengjast annari vefþjónustu skal einfaldlega breyta slóð sem gefin er upp í [.env].(.env)
 
 ```bash
 > git clone https://github.com/freyrdanielsson/vef2-hopverkefni2.git
