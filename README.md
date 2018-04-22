@@ -62,7 +62,7 @@ Notað er redux fyrir auðkenningu og notanda. Einnig er redux notað við lestu
 
 ## Uppsetning
 
-Hægt er að halda áfram með þetta verkefni með því að clone-a þetta repo. Ath samt að það byggir á bakenda frá [osk](https://github.com/vefforritun/vef2-2018-h1-synilausn) sem hefur verið settur upp á [heroku](https://vef2-h1-synilausn.herokuapp.com) af okkur. Til að tengjast annari vefþjónustu skal einfaldlega breyta slóð sem gefin er upp í [.env].(.env)
+Hægt er að halda áfram með þetta verkefni með því að clone-a þetta repo. Ath samt að það byggir á bakenda frá [osk](https://github.com/vefforritun/vef2-2018-h1-synilausn) sem hefur verið settur upp á [heroku](https://vef2-h1-synilausn.herokuapp.com) af okkur. Til að tengjast annari vefþjónustu skal einfaldlega breyta slóð sem gefin er upp í [.env](.env).
 
 ```bash
 > git clone https://github.com/freyrdanielsson/vef2-hopverkefni2.git
